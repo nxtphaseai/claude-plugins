@@ -14,8 +14,24 @@ EVAL_DIR="$REPO_ROOT/eval"
 HTML="$EVAL_DIR/eval.html"
 TPL="$REPO_ROOT/.claude/hooks/eval-card.html.tpl"
 
-# Bail quietly if there is nothing to score.
-[[ -f "$STATE_FILE" ]] || exit 0
+# Bail (with a useful message) if there's nothing to score. Silent exit here
+# was the #1 reported failure mode — the user has no way to tell whether the
+# hooks are even installed.
+if [[ ! -f "$STATE_FILE" ]]; then
+    cat >&2 <<EOF
+[eval] no captured prompt at $STATE_FILE
+       Either:
+         - no UserPromptSubmit has fired since the last Stop this session
+           (e.g. /eval was the first thing you ran — capture hooks skip
+           slash commands by design), or
+         - the capture hook isn't loaded. With /plugin install, hooks
+           auto-register but only after you restart Claude Code. With
+           bash install.sh, check .claude/settings.json for an entry
+           pointing at eval-capture-prompt.sh.
+       Send a real prompt and try again.
+EOF
+    exit 0
+fi
 command -v claude >/dev/null 2>&1 || { echo "[eval] claude CLI not found, skipping" >&2; exit 0; }
 command -v jq     >/dev/null 2>&1 || { echo "[eval] jq not found, skipping" >&2; exit 0; }
 

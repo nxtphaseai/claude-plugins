@@ -102,6 +102,28 @@ original instruction PLUS every follow-up so nothing the user said is
 lost in scoring. The state file is cleared on `Stop` so the next prompt
 starts a fresh task.
 
+## Troubleshooting
+
+**`/eval` says nothing got appended / "no captured prompt at …"**
+
+The capture hook never ran in this session. Two causes:
+
+1. **You didn't restart Claude Code after `/plugin install`.** Hooks load
+   only at session start. Quit and reopen.
+2. **`/eval` was the first thing you ran.** The capture hook deliberately
+   skips slash commands — there's no "task" to grade. Send a real prompt
+   first; once the agent has done a turn, `/eval` will have something to
+   score.
+
+To verify hooks are wired (plugin install): the hooks are registered by
+Claude Code itself from the plugin's `hooks/hooks.json` — you will **not**
+see them in your project's `.claude/settings.json`. That's normal. To verify
+the plugin is loaded, run `/plugin` and look for `agent-eval` in the list.
+
+To verify hooks are wired (manual install via `bash install.sh`): grep
+`.claude/settings.json` for `eval-capture-prompt.sh` — you should see one
+entry under `hooks.UserPromptSubmit` and one under `hooks.Stop`.
+
 ## Toggling the auto-eval off
 
 Don't want every prompt graded? Drop the two `agent-eval` entries from

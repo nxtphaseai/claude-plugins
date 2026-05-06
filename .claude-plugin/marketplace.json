@@ -7,14 +7,14 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.2.0",
+    "version": "0.2.1",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
     {
       "name": "agent-eval",
       "description": "Auto-grades the agent's last turn against the user prompt and appends a red/green scored card to eval/eval.html.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "source": "./plugins/agent-eval",
       "keywords": ["evaluation", "agent", "qa", "self-grading"],
       "license": "MIT"
