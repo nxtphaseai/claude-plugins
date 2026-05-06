@@ -7,10 +7,10 @@ once, install whatever you need, get updates by re-subscribing.
 
 ```bash
 # One-time: register this marketplace in Claude Code
-claude /plugin marketplace add nxtphase/claude-plugins
+claude /plugin marketplace add nxtphaseai/claude-plugins
 
 # Browse and install
-claude /plugin install agent-eval@nxtphase
+claude /plugin install agent-eval@nxtphaseai
 ```
 
 After install, **restart your Claude Code session** so commands and hooks
@@ -19,8 +19,8 @@ load.
 To upgrade a plugin to whatever's on `main`:
 
 ```bash
-claude /plugin marketplace update nxtphase
-claude /plugin install agent-eval@nxtphase
+claude /plugin marketplace update nxtphaseai
+claude /plugin install agent-eval@nxtphaseai
 ```
 
 To remove:
@@ -34,7 +34,7 @@ of commands, every plugin under `plugins/` also ships with a manual
 installer. For example:
 
 ```bash
-git clone git@github.com:nxtphase/claude-plugins.git
+git clone git@github.com:nxtphaseai/claude-plugins.git
 bash claude-plugins/plugins/agent-eval/install.sh
 ```
 
@@ -73,7 +73,7 @@ More on the way.
 3. Bump the marketplace `metadata.version`.
 
 4. Open a PR against `main`. Once merged, teammates pick it up via
-   `claude /plugin marketplace update nxtphase`.
+   `claude /plugin marketplace update nxtphaseai`.
 
 ## Versioning
 

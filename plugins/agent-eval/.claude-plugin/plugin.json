@@ -7,8 +7,8 @@
     "email": "marco@nxtphase.ai",
     "url": "https://nxtphase.ai"
   },
-  "homepage": "https://github.com/nxtphase/claude-plugins/tree/main/plugins/agent-eval",
-  "repository": "https://github.com/nxtphase/claude-plugins",
+  "homepage": "https://github.com/nxtphaseai/claude-plugins/tree/main/plugins/agent-eval",
+  "repository": "https://github.com/nxtphaseai/claude-plugins",
   "keywords": ["evaluation", "agent", "qa", "self-grading"],
   "license": "MIT"
 }
