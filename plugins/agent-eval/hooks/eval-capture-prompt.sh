@@ -37,22 +37,41 @@ esac
 GIT_HEAD="$(git -C "$REPO_ROOT" rev-parse HEAD 2>/dev/null || echo unknown)"
 BRANCH="$(git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null || echo unknown)"
 TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+STATE_FILE="$STATE_DIR/last-task.json"
 
+# A "task" is one user instruction plus everything they reply with while the
+# agent is still working — plan-mode confirmations, AskUserQuestion answers,
+# course corrections. Keep the FIRST prompt as the anchor and append every
+# follow-up so the evaluator sees the whole conversation. eval-run.sh clears
+# the state file on Stop so the next prompt starts a new task.
 if command -v jq >/dev/null 2>&1; then
-    jq -n \
-        --arg prompt "$PROMPT" \
-        --arg head   "$GIT_HEAD" \
-        --arg branch "$BRANCH" \
-        --arg ts     "$TS" \
-        '{prompt: $prompt, git_head: $head, branch: $branch, captured_at: $ts}' \
-        > "$STATE_DIR/last-task.json"
+    if [[ -s "$STATE_FILE" ]] && jq -e '.prompt' "$STATE_FILE" >/dev/null 2>&1; then
+        # Existing task — append.
+        jq --arg p "$PROMPT" --arg ts "$TS" '
+          .follow_ups = ((.follow_ups // []) + [{"prompt": $p, "captured_at": $ts}])
+        ' "$STATE_FILE" > "$STATE_FILE.tmp" && mv "$STATE_FILE.tmp" "$STATE_FILE"
+    else
+        # New task — write the anchor.
+        jq -n \
+            --arg prompt "$PROMPT" \
+            --arg head   "$GIT_HEAD" \
+            --arg branch "$BRANCH" \
+            --arg ts     "$TS" \
+            '{prompt: $prompt, git_head: $head, branch: $branch, captured_at: $ts, follow_ups: []}' \
+            > "$STATE_FILE"
+    fi
 else
-    # Fallback: write a minimal JSON without jq.
-    {
-        printf '{"prompt": '
-        printf '%s' "$PROMPT" | python3 -c 'import json,sys;print(json.dumps(sys.stdin.read()))'
-        printf ', "git_head": "%s", "branch": "%s", "captured_at": "%s"}\n' "$GIT_HEAD" "$BRANCH" "$TS"
-    } > "$STATE_DIR/last-task.json"
+    # Fallback: no jq; only handles the new-task case. Follow-ups are dropped
+    # but the original anchor is preserved (still better than the old
+    # overwrite-everything behaviour).
+    if [[ ! -s "$STATE_FILE" ]]; then
+        {
+            printf '{"prompt": '
+            printf '%s' "$PROMPT" | python3 -c 'import json,sys;print(json.dumps(sys.stdin.read()))'
+            printf ', "git_head": "%s", "branch": "%s", "captured_at": "%s", "follow_ups": []}\n' \
+                "$GIT_HEAD" "$BRANCH" "$TS"
+        } > "$STATE_FILE"
+    fi
 fi
 
 exit 0

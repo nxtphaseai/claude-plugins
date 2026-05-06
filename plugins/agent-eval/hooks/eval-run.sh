@@ -27,6 +27,17 @@ BRANCH="$(jq -r '.branch'      "$STATE_FILE")"
 CAPTURED_AT="$(jq -r '.captured_at' "$STATE_FILE")"
 NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 
+# Follow-ups: every UserPromptSubmit since the original anchor (plan-mode
+# confirmations, AskUserQuestion answers, mid-task corrections). Joined into
+# a numbered list so the evaluator sees the whole conversation.
+FOLLOW_UPS_BLOCK="$(jq -r '
+  if (.follow_ups // [] | length) == 0 then ""
+  else
+    "=== FOLLOW-UPS / CLARIFICATIONS ===\n" +
+    ((.follow_ups | to_entries | map("[" + ((.key + 1) | tostring) + "] " + .value.prompt) | join("\n\n")))
+  end
+' "$STATE_FILE")"
+
 # Build the diff bundle. Cap to 8 KB so the evaluator runs fast even after a
 # huge refactor; the evaluator is told the diff is truncated when relevant.
 DIFF="$(git -C "$REPO_ROOT" diff "$HEAD0"...HEAD 2>/dev/null || true)"
@@ -61,8 +72,10 @@ Output a SINGLE JSON object — no prose, no markdown fences. Schema:
 Score guide: GREEN >= 85, AMBER 60-84, RED < 60. List 3-7 concrete criteria
 specific to the task (not generic). Evidence must reference the diff/log.
 
-=== TASK ===
+=== ORIGINAL TASK ===
 $PROMPT
+
+$FOLLOW_UPS_BLOCK
 
 === BRANCH / HEAD ===
 branch=$BRANCH  start_head=$HEAD0  truncated_diff=$TRUNCATED
@@ -160,4 +173,8 @@ CARD="$(printf '%s' "$JSON" | jq -r --arg now "$NOW" --arg captured "$CAPTURED_A
 printf '%s\n' "$CARD" >> "$HTML"
 
 echo "[eval] appended $(printf '%s' "$JSON" | jq -r '.verdict + " " + (.overall_score|tostring)') to $HTML" >&2
+
+# End-of-task: clear the state file so the next UserPromptSubmit starts a
+# fresh task instead of being treated as a follow-up to this one.
+rm -f "$STATE_FILE"
 exit 0

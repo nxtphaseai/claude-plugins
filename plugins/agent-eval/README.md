@@ -92,6 +92,16 @@ The hooks set `ZL_EVAL_RUNNING=1` before invoking `claude -p` and bail
 early if they see it. Without this, the evaluator's own session would
 re-trigger the hooks and loop.
 
+## What counts as a "task"
+
+A task starts at the **first** `UserPromptSubmit` after a `Stop`. Every
+subsequent prompt while the agent is still working — plan-mode
+confirmations, `AskUserQuestion` answers, mid-task corrections — is
+appended as a follow-up to the same task. The evaluator receives the
+original instruction PLUS every follow-up so nothing the user said is
+lost in scoring. The state file is cleared on `Stop` so the next prompt
+starts a fresh task.
+
 ## Toggling the auto-eval off
 
 Don't want every prompt graded? Drop the two `agent-eval` entries from
