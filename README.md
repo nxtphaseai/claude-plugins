@@ -46,6 +46,21 @@ bash claude-plugins/plugins/agent-eval/install.sh
 
 More on the way.
 
+## Claude Desktop App?
+
+These plugins are **Claude Code only**. They will not load into the Claude
+Desktop app, because they rely on Claude Code-specific surfaces that Desktop
+doesn't have:
+
+- Hook events (`UserPromptSubmit`, `Stop`, ...) that fire around each agent turn.
+- Shell execution for hook scripts (`bash`, `git`, `jq`, the `claude` CLI).
+- File-based slash commands under `commands/*.md`.
+- A working directory / git repo to diff against.
+
+If you want to extend Claude Desktop, the supported extension model there is
+[MCP servers](https://modelcontextprotocol.io). Nothing in this marketplace
+ships as an MCP server today.
+
 ## For authors — adding a new plugin
 
 1. Create `plugins/<name>/` with at minimum:
