@@ -1,0 +1,115 @@
+# agent-eval
+
+Self-grading harness for Claude Code. After every agent turn it diffs the
+repo against the snapshot it took when the prompt arrived, asks a fresh
+`claude -p` to score what actually shipped against the original ask, and
+appends one styled card to `eval/eval.html` with red/green dots per
+criterion and a 0–100 overall score.
+
+You also get a `/eval` slash command for on-demand re-runs.
+
+## Install
+
+```bash
+git clone <this-repo> agent-eval
+cd agent-eval
+bash install.sh             # installs into ./.claude/ of the current git repo
+# or
+bash install.sh --user      # installs user-wide into ~/.claude/
+```
+
+After install, **restart Claude Code** so the slash command and hooks load.
+
+To remove:
+
+```bash
+bash install.sh --uninstall
+```
+
+The uninstaller deletes the three files and unmerges the hook entries from
+`settings.json`, leaving any other hooks intact.
+
+## What it installs
+
+| Path                                  | Role                                                                 |
+| ------------------------------------- | -------------------------------------------------------------------- |
+| `<scope>/commands/eval.md`            | The `/eval` slash command for manual runs.                           |
+| `<scope>/hooks/eval-capture-prompt.sh`| `UserPromptSubmit` hook — snapshots the prompt + git HEAD.           |
+| `<scope>/hooks/eval-run.sh`           | `Stop` hook — diffs, scores, appends to `eval/eval.html`.            |
+| `<scope>/settings.json`               | Hook registrations are merged in (existing entries preserved).       |
+
+`<scope>` is the project root's `.claude/` for the default install, or
+`~/.claude/` for `--user`.
+
+The eval log lives in `eval/eval.html` at whichever **project root** the
+agent is currently working in. User-wide install means every project picks
+up the same hooks but writes its own per-project `eval/eval.html`.
+
+## Output
+
+`eval/eval.html` is a single self-contained file (no external CSS, no JS).
+Each run appends one card:
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│ 2026-05-06T07:18:00Z · branch parser-multi-format · base 876be279  │
+│                                              90 [GREEN]            │
+│ ┌──────────────────────────────────────────────────────────────┐   │
+│ │ Hide handleiding link in the sidebar                         │   │
+│ └──────────────────────────────────────────────────────────────┘   │
+│  ●  Sidebar entry removed     diff drops the <a href="/help"> ...  │
+│  ●  /help route still alive   no router change in cmd/server/...   │
+│  ●  Version bumped            v0.10.1 → v0.10.2-multiformat ...    │
+│  > raw                                                              │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+Verdicts:
+
+- **GREEN** — every requirement landed; score ≥ 85.
+- **AMBER** — most landed; 60–84.
+- **RED** — significant gaps; < 60.
+
+## Requirements
+
+- `claude` CLI on PATH (the headless `claude -p` is the evaluator).
+- `jq`.
+- `git` (the project must be inside a git repo for the diff).
+
+If `claude` or `jq` are missing the hooks log to stderr and exit 0 — they
+never block your turn.
+
+## Cost and performance
+
+One `claude -p` call per agent stop, capped at 8 KB of diff so it stays
+fast even after a huge refactor. Truncation is announced in the prompt
+the evaluator sees. If the agent didn't change any files, the harness
+short-circuits and writes a stub card without burning a Claude call.
+
+## Recursion guard
+
+The hooks set `ZL_EVAL_RUNNING=1` before invoking `claude -p` and bail
+early if they see it. Without this, the evaluator's own session would
+re-trigger the hooks and loop.
+
+## Toggling the auto-eval off
+
+Don't want every prompt graded? Drop the two `agent-eval` entries from
+`<scope>/settings.json` (or run `install.sh --uninstall` and reinstall
+later). The `/eval` slash command keeps working either way for on-demand
+runs.
+
+## Plugin manifest
+
+`.claude-plugin/plugin.json` lets this directory be loaded as a Claude
+Code plugin if your team's setup supports `claude /plugin add <path>`.
+For older versions or custom workflows, the `install.sh` route works
+unchanged.
+
+## What it does NOT do
+
+- Doesn't modify your code.
+- Doesn't read your secrets — only diffs and commit messages.
+- Doesn't send anything to a third party. The `claude` CLI talks to
+  Anthropic; everything else stays on disk.
+- Doesn't fail your build or block your turn.

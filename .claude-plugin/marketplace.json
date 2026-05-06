@@ -1,0 +1,23 @@
+{
+  "name": "nxtphase",
+  "description": "NxtPhase plugin marketplace for Claude Code.",
+  "owner": {
+    "name": "NxtPhase",
+    "email": "marco@nxtphase.ai",
+    "url": "https://nxtphase.ai"
+  },
+  "metadata": {
+    "version": "0.1.0",
+    "homepage": "https://github.com/nxtphase/claude-plugins"
+  },
+  "plugins": [
+    {
+      "name": "agent-eval",
+      "description": "Auto-grades the agent's last turn against the user prompt and appends a red/green scored card to eval/eval.html.",
+      "version": "0.1.0",
+      "source": "./plugins/agent-eval",
+      "keywords": ["evaluation", "agent", "qa", "self-grading"],
+      "license": "MIT"
+    }
+  ]
+}
