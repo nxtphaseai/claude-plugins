@@ -52,10 +52,21 @@ settings_merge() {
     else
         current="{}"
     fi
-    # Deep-merge our hooks block into whatever already exists. We append to
-    # any existing UserPromptSubmit / Stop arrays rather than replacing them.
+    # Deep-merge our hooks block into whatever already exists. First drop
+    # any pre-existing entries that already point at our scripts (so
+    # re-running install.sh, or migrating from a manually-registered setup,
+    # doesn't double-fire the hooks). Then append our entries. Any other
+    # hooks the user has are preserved.
     jq --argjson add "$snippet" '
+      def keep_non_eval:
+        if type == "array" then
+          map(select(
+            (.hooks // [] | map(.command // "" | test("eval-capture-prompt\\.sh|eval-run\\.sh")) | any) | not
+          ))
+        else . end;
       .hooks = (.hooks // {})
+      | .hooks.UserPromptSubmit = ((.hooks.UserPromptSubmit // []) | keep_non_eval)
+      | .hooks.Stop             = ((.hooks.Stop             // []) | keep_non_eval)
       | reduce ($add.hooks | to_entries[]) as $entry (
           .;
           .hooks[$entry.key] = ((.hooks[$entry.key] // []) + $entry.value)
