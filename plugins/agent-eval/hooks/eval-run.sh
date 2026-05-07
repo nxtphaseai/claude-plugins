@@ -65,6 +65,90 @@ if (( DIFF_LEN > 8192 )); then
 fi
 LOG="$(git -C "$REPO_ROOT" log "$HEAD0"..HEAD --oneline 2>/dev/null || true)"
 
+# --- Project eval rules (optional) -------------------------------------------
+# If eval/eval.md exists, treat it as a project-specific rubric the evaluator
+# should weigh on top of the original task. Two parts:
+#   - "## Checks" section: list items like "- `cmd to run`". Each command is
+#     executed in $REPO_ROOT, and its exit code + trimmed stdout/stderr go to
+#     the evaluator. Lets you wire deterministic linters/typecheckers in.
+#   - Everything else: free-form markdown rules (style, naming, architecture,
+#     anything you want LLM-judged). Passed verbatim.
+# Augments the existing prompt-based scoring; missing eval.md = old behavior.
+RULES_FILE="$REPO_ROOT/eval/eval.md"
+RULES_BLOCK=""
+CHECKS_BLOCK=""
+if [[ -f "$RULES_FILE" ]]; then
+    # Rules portion: everything except the ## Checks section.
+    # Match on $0 with rtrim so "## Checks  " or "## Checks\t" still triggers.
+    RULES_TEXT="$(awk '
+      function rtrim(s) { sub(/[ \t\r]+$/, "", s); return s }
+      { line = rtrim($0) }
+      line == "## Checks"      { skip = 1; next }
+      line ~ /^## /            { if (skip) { skip = 0 } }
+      !skip                    { print }
+    ' "$RULES_FILE")"
+    if (( ${#RULES_TEXT} > 4096 )); then
+        RULES_TEXT="${RULES_TEXT:0:4096}
+[... rules truncated at 4 KB ...]"
+    fi
+    # Strip leading/trailing whitespace via parameter expansion. If the file is
+    # only ## Checks with no prose, RULES_TEXT may be empty — skip the block.
+    if [[ -n "${RULES_TEXT//[$'\n\r\t ']/}" ]]; then
+        RULES_BLOCK="
+=== EVAL RULES (from eval/eval.md) ===
+These are project-specific rules the agent must respect. Add criteria for
+rule compliance to the criteria array, alongside task-delivery criteria.
+$RULES_TEXT
+"
+    fi
+
+    # Check commands: list items inside ## Checks, of the form: - \`cmd\`
+    CHECK_CMDS="$(awk '
+      function rtrim(s) { sub(/[ \t\r]+$/, "", s); return s }
+      { line = rtrim($0) }
+      line == "## Checks"      { in_block = 1; next }
+      line ~ /^## /            { if (in_block) { in_block = 0 } }
+      in_block                 { print }
+    ' "$RULES_FILE" | sed -nE 's/^[[:space:]]*-[[:space:]]+`(.+)`[[:space:]]*$/\1/p')"
+
+    if [[ -n "$CHECK_CMDS" ]]; then
+        CHECK_RESULTS=""
+        i=0
+        while IFS= read -r CMD; do
+            [[ -z "$CMD" ]] && continue
+            i=$((i+1))
+            if (( i > 8 )); then
+                CHECK_RESULTS="$CHECK_RESULTS
+
+[... additional checks skipped, max 8 per run ...]"
+                break
+            fi
+            # Run the check without errexit so non-zero exits are captured
+            # rather than killing the eval. Stay in $REPO_ROOT.
+            set +e
+            OUT="$(cd "$REPO_ROOT" && bash -c "$CMD" 2>&1)"
+            CODE=$?
+            set -e
+            if (( ${#OUT} > 1024 )); then
+                OUT="${OUT:0:1024}
+[... output truncated at 1 KB ...]"
+            fi
+            CHECK_RESULTS="$CHECK_RESULTS
+
+[\$ $CMD] exit=$CODE
+$OUT"
+        done <<< "$CHECK_CMDS"
+
+        CHECKS_BLOCK="
+=== CHECK RESULTS (from eval/eval.md ## Checks) ===
+A non-zero exit on a check is strong evidence the rule it tests failed.
+The command line is shown after [\$ ...] for each entry.
+$CHECK_RESULTS
+"
+    fi
+fi
+# -----------------------------------------------------------------------------
+
 # If literally nothing changed, don't burn a Claude call — write a stub card
 # saying the agent was a no-op for this prompt.
 if [[ -z "$DIFF" && -z "$LOG" ]]; then
@@ -86,13 +170,16 @@ Output a SINGLE JSON object — no prose, no markdown fences. Schema:
 }
 
 Score guide: GREEN >= 85, AMBER 60-84, RED < 60. List 3-7 concrete criteria
-specific to the task (not generic). Evidence must reference the diff/log.
+specific to the task (not generic). Evidence must reference the diff/log,
+or — when EVAL RULES / CHECK RESULTS are present below — the rule text and
+check exit codes. When rules and task pull in different directions, weigh
+both: shipping the task while breaking a project rule is not a clean GREEN.
 
 === ORIGINAL TASK ===
 $PROMPT
 
 $FOLLOW_UPS_BLOCK
-
+$RULES_BLOCK$CHECKS_BLOCK
 === BRANCH / HEAD ===
 branch=$BRANCH  start_head=$HEAD0  truncated_diff=$TRUNCATED
 

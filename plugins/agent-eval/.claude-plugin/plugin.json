@@ -1,6 +1,6 @@
 {
   "name": "agent-eval",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Auto-grades the agent's most recent turn against the user's prompt and appends a red/green scored card to eval/eval.html.",
   "author": {
     "name": "NxtPhase",

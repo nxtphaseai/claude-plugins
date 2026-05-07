@@ -42,7 +42,7 @@ bash claude-plugins/plugins/agent-eval/install.sh
 
 | Plugin                              | What it does                                                                                  |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- |
-| [agent-eval](plugins/agent-eval/)   | Auto-grades the agent's last turn against your prompt and appends a card to `eval/eval.html`. |
+| [agent-eval](plugins/agent-eval/)   | Auto-grades the agent's last turn against your prompt (and optional project rules in `eval/eval.md`) and appends a card to `eval/eval.html`. |
 
 More on the way.
 

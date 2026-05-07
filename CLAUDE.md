@@ -43,11 +43,12 @@ Self-grading harness. Understand the pairing before editing:
 - **`hooks/eval-capture-prompt.sh`** runs on `UserPromptSubmit`. Snapshots the user's prompt, current git HEAD, and branch into `<repo>/.claude/eval-state/last-task.json`.
 - **`hooks/eval-run.sh`** runs on `Stop`. Diffs repo against the captured HEAD, sends prompt + diff (capped at 8 KB) to `claude -p` for scoring, appends a styled card to `<repo>/eval/eval.html`, then deletes the state file.
 
-Three behaviors that aren't obvious from reading either script alone:
+Four behaviors that aren't obvious from reading either script alone:
 
 1. **Task = anchor + follow-ups.** A new task is the first `UserPromptSubmit` after a `Stop`. Subsequent prompts (plan-mode confirmations, `AskUserQuestion` answers, mid-task corrections) get appended to `follow_ups[]` in the same state file. The evaluator sees the original instruction *plus* every follow-up. Don't change capture to overwrite — that regresses 0.2.0.
 2. **Recursion guard via `ZL_EVAL_RUNNING=1`.** Both hooks bail immediately if this env var is set. `eval-run.sh` exports it before invoking `claude -p`, otherwise the nested session re-fires the hooks and loops. Any new hook in this plugin must honor the same guard.
-3. **Fail-soft is mandatory.** Missing `claude`, `jq`, or `git` must log to stderr and `exit 0` — never block the user's turn. The empty-diff path writes a stub card without burning a Claude call.
+3. **Fail-soft is mandatory.** Missing `claude`, `jq`, or `git` must log to stderr and `exit 0` — never block the user's turn. The empty-diff path writes a stub card without burning a Claude call. State-missing in `eval-run.sh` is loud-on-stderr (0.2.1+), not silent.
+4. **Optional project rubric at `eval/eval.md` (0.3.0+).** If present, its free-form prose is passed to the evaluator as additional criteria, and any markdown list items under `## Checks` of the form `- \`cmd\`` are executed in the project root and their exit code + trimmed output also goes to the evaluator. Augments task scoring, never replaces it. The grader is **read-only** — it never sets up a missing linter/typechecker; a missing tool fails its check loudly and the agent's next turn fixes it. This is deliberate: a grader that mutates the repo creates diffs that contaminate the next eval.
 
 State file: `.claude/eval-state/last-task.json` (per-project, gitignored by virtue of being inside `.claude/`). Output: `eval/eval.html` (single self-contained file, no JS, appended-to per run).
 

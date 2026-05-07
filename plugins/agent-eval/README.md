@@ -92,6 +92,49 @@ The hooks set `ZL_EVAL_RUNNING=1` before invoking `claude -p` and bail
 early if they see it. Without this, the evaluator's own session would
 re-trigger the hooks and loop.
 
+## Project rules — `eval/eval.md`
+
+If you drop a markdown file at `eval/eval.md` in the project root, the
+evaluator gets it as **additional criteria on top of** the original task.
+It does not replace task scoring — both are weighed.
+
+Two kinds of content, both optional:
+
+```markdown
+# Whatever you want — this is the rules document for the agent
+
+- Functions stay under 50 lines.
+- No `any` types in TypeScript files under `src/`.
+- API errors must be 4-letter codes.
+- New endpoints need a docstring describing auth requirements.
+
+## Checks
+
+- `npm run lint`
+- `npm run typecheck`
+- `pytest -x --tb=short`
+```
+
+**Free-form rules.** Anything you write outside the `## Checks` section is
+passed verbatim to the evaluator as project-specific rules. Use it for
+naming conventions, architectural guardrails, style preferences, "do not
+introduce dependency X", anything an LLM can judge from the diff.
+
+**Deterministic checks.** The `## Checks` section is a markdown list where
+each item is a backtick-quoted shell command. Each command is executed in
+the project root; its exit code and trimmed stdout/stderr go to the
+evaluator. A non-zero exit is strong evidence that the rule it tests
+failed. This is how you wire in linters, typecheckers, test suites, custom
+shell scripts, anything with a meaningful exit code.
+
+**Limits.** The rules text is capped at 4 KB, each check's output at 1 KB,
+max 8 checks per run. Truncations are announced inline.
+
+**Read-only by design.** The harness will not install or configure a
+missing linter. If `npm run lint` isn't wired up yet, the check fails with
+a useful exit code/output and the evaluator marks that criterion red. Set
+up the tool in a separate turn.
+
 ## What counts as a "task"
 
 A task starts at the **first** `UserPromptSubmit` after a `Stop`. Every
