@@ -1,0 +1,75 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'artifacts/**'
+      - 'plugins/*/artifacts/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage site
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          mkdir -p _site/ask-visual
+
+          REPO_URL="https://github.com/$REPO"
+          BLOB="$REPO_URL/blob/main"
+          TREE="$REPO_URL/tree/main"
+
+          # Marketplace landing -> /index.html, with relative repo paths
+          # rewritten so they resolve on the deployed Pages site:
+          #   - links to deployed HTML become flat /ask-visual/... paths
+          #   - links to source files (.md, .sh, plugin folders) point at
+          #     the corresponding GitHub blob/tree URL so they keep working
+          sed \
+            -e "s|\.\./plugins/ask-visual/artifacts/README\.html|./ask-visual/|g" \
+            -e "s|\.\./plugins/ask-visual/artifacts/demo-easings\.html|./ask-visual/demo-easings.html|g" \
+            -e "s|\.\./plugins/agent-eval/install\.sh|$BLOB/plugins/agent-eval/install.sh|g" \
+            -e "s|\.\./plugins/ask-visual/install\.sh|$BLOB/plugins/ask-visual/install.sh|g" \
+            -e "s|\.\./plugins/agent-eval/README\.md|$BLOB/plugins/agent-eval/README.md|g" \
+            -e "s|\.\./plugins/agent-eval/|$TREE/plugins/agent-eval/|g" \
+            -e "s|\.\./plugins/ask-visual/|$TREE/plugins/ask-visual/|g" \
+            artifacts/index.html > _site/index.html
+
+          # Per-plugin subsite. README is published as index.html so that
+          # https://<host>/<repo>/ask-visual/ resolves directly to it.
+          # The README's existing ./demo-easings.html sibling link still
+          # works after this rename.
+          cp plugins/ask-visual/artifacts/README.html _site/ask-visual/index.html
+          cp plugins/ask-visual/artifacts/demo-easings.html _site/ask-visual/demo-easings.html
+
+          echo "--- staged site ---"
+          find _site -type f | sort
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
