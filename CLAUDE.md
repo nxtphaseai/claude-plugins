@@ -36,7 +36,12 @@ Three places hold versions and they need to move together when a plugin changes:
 - `.claude-plugin/marketplace.json` → the matching `plugins[].version`
 - `.claude-plugin/marketplace.json` → `metadata.version` (so a marketplace re-subscribe sees *something* changed even if you only touched one plugin)
 
-## agent-eval architecture (the only current plugin)
+## Plugins overview
+
+- `agent-eval` — see section below; auto-grades each agent turn.
+- `ask-visual` — single-shot localhost HTTP server. Agent writes the body of an HTML form to a temp file and runs `python3 .claude/bin/ask-visual.py <file>`; script auto-opens the URL in the user's browser, blocks until POST, prints submission as JSON to stdout, exits. Stdlib-only Python. No persistent backend by design — every question spins up a fresh server, which dies on submit. Multi-button-per-card pattern works because the JS shim captures the clicked submitter's name+value alongside all named inputs.
+
+## agent-eval architecture
 
 Self-grading harness. Understand the pairing before editing:
 

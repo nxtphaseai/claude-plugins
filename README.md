@@ -43,6 +43,7 @@ bash claude-plugins/plugins/agent-eval/install.sh
 | Plugin                              | What it does                                                                                  |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- |
 | [agent-eval](plugins/agent-eval/)   | Auto-grades the agent's last turn against your prompt (and optional project rules in `eval/eval.md`) and appends a card to `eval/eval.html`. |
+| [ask-visual](plugins/ask-visual/)   | Visual `AskUserQuestion`: agent serves a one-shot HTML form (cards, sliders, color pickers, anything) on localhost and feeds the submission back as JSON. |
 
 More on the way.
 

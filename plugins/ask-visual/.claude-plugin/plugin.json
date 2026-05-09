@@ -1,0 +1,14 @@
+{
+  "name": "ask-visual",
+  "version": "0.1.0",
+  "description": "Tiny one-shot localhost HTTP server that serves a custom HTML form (cards, sliders, color pickers, anything) and feeds the user's submission back into the conversation as JSON.",
+  "author": {
+    "name": "NxtPhase",
+    "email": "marco@nxtphase.ai",
+    "url": "https://nxtphase.ai"
+  },
+  "homepage": "https://github.com/nxtphaseai/claude-plugins/tree/main/plugins/ask-visual",
+  "repository": "https://github.com/nxtphaseai/claude-plugins",
+  "keywords": ["ux", "askuser", "form", "interactive", "html"],
+  "license": "MIT"
+}

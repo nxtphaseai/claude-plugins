@@ -7,7 +7,7 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.3.0",
+    "version": "0.4.0",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
@@ -17,6 +17,14 @@
       "version": "0.3.0",
       "source": "./plugins/agent-eval",
       "keywords": ["evaluation", "agent", "qa", "self-grading"],
+      "license": "MIT"
+    },
+    {
+      "name": "ask-visual",
+      "description": "Visual AskUserQuestion: spins up a one-shot localhost HTTP server, serves a custom HTML form (cards, sliders, color pickers, anything), and feeds the user's submission back into the conversation as JSON.",
+      "version": "0.1.0",
+      "source": "./plugins/ask-visual",
+      "keywords": ["ux", "askuser", "form", "interactive", "html"],
       "license": "MIT"
     }
   ]
