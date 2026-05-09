@@ -12,6 +12,28 @@ their browser, the form is POSTed back, the script prints the result to
 stdout as JSON, and the server exits. No persistent backend, nothing to
 clean up.
 
+## Make every choice informative AND creative
+
+The whole point of going visual is that the user can actually compare
+options instead of squinting at a one-line label. Treat each choice as a
+small pitch:
+
+- **Give it a memorable name or label** — never `Option A`, `Choice 1`,
+  `Foo`. Pick a word or short phrase that is itself evocative or has a
+  story behind it.
+- **Add a short description** — 1-2 sentences explaining what that choice
+  *means*, what tradeoff it represents, what it would feel like to live
+  with. Show, don't enumerate.
+- **Make the visual carry information** — if the choice is about layout,
+  render the layout. If it is about color, show the color. If it is about
+  copy, show the copy in context. The form is HTML; use it.
+- **Avoid bland symmetry** — three nearly identical options with one word
+  swapped is a worse experience than text Q&A. If you cannot make the
+  options meaningfully different, fall back to `AskUserQuestion`.
+
+When you generate the choices yourself, lean creative. The user can always
+write a custom answer in a free-text field if none of yours land.
+
 ## Workflow
 
 1. Write the **body** of the form to a temp file. Do not write `<html>`,
