@@ -1,0 +1,14 @@
+{
+  "name": "nxtphase-design",
+  "version": "0.1.0",
+  "description": "Nxt Phase AI brand & design system as an invokable skill. Ships colors, type tokens, fonts, logos, the dot-icon rules, a website UI kit, and a presentation deck template — Dieter Rams / Braun-inspired, warm cream canvas, one Signal Green accent.",
+  "author": {
+    "name": "NxtPhase",
+    "email": "marco@nxtphase.ai",
+    "url": "https://nxtphase.ai"
+  },
+  "homepage": "https://github.com/nxtphaseai/claude-plugins/tree/main/plugins/nxtphase-design",
+  "repository": "https://github.com/nxtphaseai/claude-plugins",
+  "keywords": ["design-system", "brand", "skill", "nxtphase", "rams", "html"],
+  "license": "MIT"
+}

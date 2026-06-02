@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--bg-1);padding:36px;box-sizing:border-box;font-family:var(--font-body)}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+  .btn{font-family:var(--font-body);font-size:15px;font-weight:500;border-radius:var(--r-md);padding:13px 22px;border:1px solid transparent;cursor:pointer;transition:all var(--dur) var(--ease)}
+  .primary{background:var(--off-black);color:var(--cream)}
+  .primary:hover{background:#222}
+  .green{background:var(--signal-green);color:#fff}
+  .secondary{background:transparent;color:var(--off-black);border-color:var(--hairline-strong)}
+  .link{background:transparent;color:var(--signal-green);padding:13px 4px}
+  .link span{border-bottom:1px solid var(--signal-green);padding-bottom:2px}
+  .lab{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);font-weight:500;margin-bottom:14px}
+</style></head>
+<body>
+  <div class="lab">Buttons</div>
+  <div class="row">
+    <button class="btn primary">Start a conversation</button>
+    <button class="btn green">Plan een gesprek</button>
+  </div>
+  <div class="row">
+    <button class="btn secondary">Secondary CTA</button>
+    <button class="btn link"><span>Text link →</span></button>
+  </div>
+</body></html>

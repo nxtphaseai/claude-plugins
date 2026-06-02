@@ -42,8 +42,9 @@ bash claude-plugins/plugins/agent-eval/install.sh
 
 | Plugin                              | What it does                                                                                  |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- |
-| [agent-eval](plugins/agent-eval/)   | Auto-grades the agent's last turn against your prompt (and optional project rules in `eval/eval.md`) and appends a card to `eval/eval.html`. |
-| [ask-visual](plugins/ask-visual/)   | Visual `AskUserQuestion`: agent serves a one-shot HTML form (cards, sliders, color pickers, anything) on localhost and feeds the submission back as JSON. |
+| [agent-eval](plugins/agent-eval/)         | Auto-grades the agent's last turn against your prompt (and optional project rules in `eval/eval.md`) and appends a card to `eval/eval.html`. |
+| [ask-visual](plugins/ask-visual/)         | Visual `AskUserQuestion`: agent serves a one-shot HTML form (cards, sliders, color pickers, anything) on localhost and feeds the submission back as JSON. |
+| [nxtphase-design](plugins/nxtphase-design/) | The Nxt Phase AI brand & design system as a skill — colors, type, fonts, logos, dot-icon rules, a website UI kit, and a 10-slide deck template. Dieter Rams / Braun-inspired. |
 
 More on the way.
 

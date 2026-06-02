@@ -1,0 +1,158 @@
+/* ============================================================
+   NXT PHASE AI — Colors & Type
+   "Pragmatic by design. Built on the principles of Dieter Rams."
+   Source: Brand Guidelines (1).pdf + Template Guidelines.pptx theme
+   ============================================================ */
+
+/* ---------- FONTS ---------- */
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("fonts/PPEditorialNewPPTTight-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "PP Editorial New";
+  src: url("fonts/PPEditorialNewPPTTight-Italic.otf") format("opentype");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("fonts/SwitzerPPTTight-Regular.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("fonts/SwitzerPPTTight-Medium.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("fonts/SwitzerPPTTight-Semibold.otf") format("opentype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* ===== PRIMARY PALETTE ===== */
+  --cream:         #F5F0E8;  /* tile bg / cream — the signature warm canvas */
+  --off-black:     #090909;  /* text 1, ink */
+  --stone:         #9B9590;  /* text 2, muted / secondary */
+  --signal-green:  #3E9B5D;  /* the one intentional accent — active/selected, links */
+  --green-deep:    #2A6B3F;  /* visited links, pressed green */
+
+  /* ===== SURFACES (warm, layered light) ===== */
+  --bg-1:          #F9F6F1;  /* page base — lightest */
+  --surface-1:     #F7F3ED;  /* raised surface */
+  --surface-2:     #F5F0E8;  /* cream tile / card */
+
+  /* ===== SUPPORTING (max ONE per slide/section) ===== */
+  --signal-orange: #E86B10;  /* amber — key callouts, numerals, charts */
+  --postit-blue:   #86C0D5;  /* backgrounds w/ black text, chart accent */
+  --postit-pink:   #F7DFDE;  /* soft surface accent */
+
+  /* ===== DECORATIVE PASTELS (icon tiles, soft surfaces) ===== */
+  --soft-mint:     #D9E5D7;
+  --soft-peach:    #F7E0CD;
+
+  /* ===== IMAGERY / DEPTH ===== */
+  --espresso:      #3D2B1F;  /* icon ink on light, warm-brown shadows */
+
+  /* ===== INK ALIASES (semantic) ===== */
+  --fg-1: var(--off-black);  /* primary text */
+  --fg-2: var(--stone);      /* secondary text */
+  --fg-inverse: var(--cream);/* text on dark */
+  --accent: var(--signal-green);
+
+  /* ===== BORDERS / HAIRLINES ===== */
+  --hairline:      rgba(9,9,9,0.10);
+  --hairline-strong: rgba(9,9,9,0.16);
+  --hairline-inverse: rgba(245,240,232,0.16);
+
+  /* ===== TYPE FAMILIES ===== */
+  --font-display: "PP Editorial New", Georgia, "Times New Roman", serif;
+  --font-body:    "Switzer", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* ===== TYPE SCALE (display: PP Editorial New) ===== */
+  --display-1:   clamp(48px, 6.5vw, 92px);  /* hero */
+  --display-2:   clamp(40px, 5vw, 68px);    /* page title */
+  --h1:          clamp(34px, 4vw, 52px);
+  --h2:          clamp(27px, 3vw, 38px);
+  --h3:          24px;
+  --lead:        clamp(19px, 1.6vw, 23px);  /* intro body, Switzer */
+  --body:        17px;                      /* default body, min 16px web */
+  --small:       15px;
+  --overline:    11px;                      /* uppercase labels only */
+
+  /* ===== RADII (Dieter Rams — soft, generous, NOT pill) ===== */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;   /* icon-tile / card radius — matches icon grid corner radius */
+  --r-pill: 999px;
+
+  /* ===== SPACING (8px base grid) ===== */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px;
+
+  /* ===== ELEVATION (warm, restrained — Braun product, not glossy) ===== */
+  --shadow-sm: 0 1px 2px rgba(61,43,31,0.06);
+  --shadow-md: 0 2px 8px rgba(61,43,31,0.07), 0 1px 2px rgba(61,43,31,0.05);
+  --shadow-lg: 0 12px 32px rgba(61,43,31,0.10), 0 2px 6px rgba(61,43,31,0.06);
+
+  /* ===== MOTION (calm, no bounce) ===== */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 200ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPE CLASSES
+   Rule: headlines in Editorial, everything else in Switzer.
+   Max 2 weights per page. Italic = emphasis only.
+   ============================================================ */
+.display-1, .display-2, h1, h2, h3, .h1, .h2, .h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--fg-1);
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.display-1 { font-size: var(--display-1); line-height: 0.98; }
+.display-2 { font-size: var(--display-2); line-height: 1.0; }
+h1, .h1 { font-size: var(--h1); }
+h2, .h2 { font-size: var(--h2); line-height: 1.08; }
+h3, .h3 { font-size: var(--h3); line-height: 1.18; letter-spacing: 0; }
+
+/* italic for emphasis / pull quotes only */
+.em-italic { font-style: italic; }
+
+body, p, .body, li, input, button, .ui {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--fg-1);
+  font-size: var(--body);
+  line-height: 1.55;
+  letter-spacing: 0;        /* never letter-space Switzer body */
+}
+.lead {
+  font-family: var(--font-body);
+  font-size: var(--lead);
+  line-height: 1.5;
+  color: var(--fg-1);
+  font-weight: 400;
+}
+.small { font-size: var(--small); line-height: 1.5; }
+.muted { color: var(--fg-2); }
+
+/* OVERLINE — uppercase labels only: 11px, medium, 0.12em tracking */
+.overline {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--overline);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+a { color: var(--signal-green); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:visited { color: var(--green-deep); }

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Brand" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{margin:0;display:grid;grid-template-columns:1fr 1fr}
+  .pane{padding:38px 40px;display:flex;flex-direction:column;justify-content:center;gap:20px;min-height:200px}
+  .light{background:var(--bg-1)}
+  .dark{background:var(--off-black)}
+  img{height:30px;width:auto}
+  .lab{font-family:var(--font-body);font-size:11px;letter-spacing:0.12em;text-transform:uppercase}
+  .light .lab{color:var(--stone)}
+  .dark .lab{color:rgba(245,240,232,0.5)}
+</style></head>
+<body>
+  <div class="pane light">
+    <img src="../assets/logos/logo-off-black.svg" alt="Nxt Phase AI">
+    <div class="lab">Primary · Off Black on light</div>
+  </div>
+  <div class="pane dark">
+    <img src="../assets/logos/logo-cream.svg" alt="Nxt Phase AI">
+    <div class="lab">Primary · Cream on dark</div>
+  </div>
+</body></html>

@@ -1,0 +1,18 @@
+<!-- @dsCard group="Components" -->
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0}
+  body{background:var(--bg-1);padding:36px;box-sizing:border-box;font-family:var(--font-body)}
+  .lab{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--stone);font-weight:500;margin-bottom:12px}
+  .field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+  .fl{font-size:13px;color:var(--off-black);font-weight:500}
+  input{font-family:var(--font-body);font-size:16px;color:var(--off-black);background:#fff;border:1px solid var(--hairline-strong);border-radius:var(--r-md);padding:13px 15px;outline:none}
+  input.focus{border-color:var(--signal-green);box-shadow:0 0 0 3px rgba(62,155,93,0.14)}
+  ::placeholder{color:var(--stone)}
+</style></head>
+<body>
+  <div class="lab">Form fields</div>
+  <div class="field"><label class="fl">Naam</label><input value="Koen Verschuren"></div>
+  <div class="field"><label class="fl">Waar staan jullie? (focus)</label><input class="focus" placeholder="Vertel ons kort over je situatie"></div>
+</body></html>
