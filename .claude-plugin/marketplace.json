@@ -7,7 +7,7 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.5.0",
+    "version": "0.6.0",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
@@ -33,6 +33,14 @@
       "version": "0.1.0",
       "source": "./plugins/nxtphase-design",
       "keywords": ["design-system", "brand", "skill", "nxtphase", "rams", "html"],
+      "license": "MIT"
+    },
+    {
+      "name": "nxtphase-demo-video",
+      "description": "How Nxt Phase AI makes demo and sales videos, as an invokable skill. Remotion scaffold, the fixed brand end card, the ElevenLabs voice-over pipeline, and the method for showing real interfaces instead of redrawing them — plus the anonymisation rules and a checklist built from real client feedback.",
+      "version": "0.1.0",
+      "source": "./plugins/nxtphase-demo-video",
+      "keywords": ["video", "demo", "sales", "remotion", "voice-over", "elevenlabs", "skill", "nxtphase"],
       "license": "MIT"
     }
   ]
