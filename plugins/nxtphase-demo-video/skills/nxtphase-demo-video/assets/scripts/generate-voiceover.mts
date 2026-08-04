@@ -93,10 +93,8 @@ if (getagd.length && !supportsTags) {
  * met `shell: true` is in node afgeraden.
  */
 const run = (parts: string[]) => {
-  const cmd = parts
-    .map((p) => (/[\s"&|<>^]/.test(p) ? `"${p.replace(/"/g, '\\"')}"` : p))
-    .join(" ");
-  const r = spawnSync(cmd, { shell: true, encoding: "utf8" });
+  if (parts.length === 0) throw new Error("run() vereist minstens één commando-onderdeel.");
+  const r = spawnSync(parts[0], parts.slice(1), { encoding: "utf8" });
   return { status: r.status, output: `${r.stdout ?? ""}${r.stderr ?? ""}` };
 };
 
