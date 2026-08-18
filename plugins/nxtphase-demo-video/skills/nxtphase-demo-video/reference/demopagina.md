@@ -214,6 +214,14 @@ de Engelse demonaam; volg dat niet na, want het is inconsistent.
 Spelling: Amerikaans. De vaste CTA bevat "organization", dus dat is de goedkoopste keuze.
 De nieuwste pagina staat op Brits ("standardised", "catalogue") en wijkt daarmee af.
 
+**Onder `## Watch the Demo` hoort de Engelse video.** Op de meeste bestaande pagina's staat
+daar niets, en dat is een gat: wie de Engelse kant leest krijgt geen demo te zien. Is er een
+Engelse variant gemaakt (stap 6 van de skill), zet die daar dan neer op dezelfde manier als
+de Nederlandse. Is die er niet, vraag dan of hij er moet komen voor je de pagina oplevert.
+
+Twee video's op één pagina betekent twee uploads, en de grens van 20 MiB geldt per upload.
+Geef ze verschillende bestandsnamen, anders raak je in de `out/`-mappen kwijt welke welke is.
+
 ---
 
 ## De video in de pagina krijgen

@@ -64,9 +64,20 @@ Opgebouwd uit echte feedback. Loop hem af vóór je oplevert, dan komt het niet 
 - [ ] Stylesheets opnieuw geëxtraheerd na een wijziging in de app.
 - [ ] Gegenereerde HTML opnieuw gegenereerd na een wijziging in de content.
 
+## Engelse variant, als die er komt
+
+Alleen relevant als stap 6 is gedraaid. Zie `voiceover.md`.
+
+- [ ] Gegenereerd met `--taal=en`, dus met de Engelse stem.
+- [ ] Cues vertaald, want anders faalt het script en dat is het punt.
+- [ ] Nieuwe scenelengtes overgenomen, niet die van de Nederlandse versie.
+- [ ] Geen letterlijke vertaling, en geen woord uit de Engelse lijst in `schrijfstijl.md`.
+- [ ] Interface niet nagetekend in het Engels.
+- [ ] Eigen bestandsnaam voor de render.
+
 ## Demopagina, als die er komt
 
-Alleen relevant als stap 6 is gedraaid. De volledige lijst staat in `demopagina.md`.
+Alleen relevant als stap 7 is gedraaid. De volledige lijst staat in `demopagina.md`.
 
 - [ ] Video speelt af, getest zonder NXT Phase-account.
 - [ ] Bij een SharePoint-link: sharing staat op "Iedereen met de link", door de gebruiker bevestigd.
@@ -74,6 +85,7 @@ Alleen relevant als stap 6 is gedraaid. De volledige lijst staat in `demopagina.
 - [ ] CTA-blok letterlijk overgenomen, beide talen.
 - [ ] Pagina is een duplicaat, dus icoon en banner staan er.
 - [ ] Em-dashes uit de bronpagina zijn weg, ook in de Engelse versie.
+- [ ] Engelse video staat onder `## Watch the Demo`, of er is gevraagd of die er moet komen.
 - [ ] Geen tekst of video van de bronpagina blijven staan, en de titel is niet `<bronnaam> (1)`.
 - [ ] Geen bestaande demopagina verwijderd of overschreven.
 - [ ] Plek onder de juiste sectiekop nog handmatig zetten, en dat ook gezegd.

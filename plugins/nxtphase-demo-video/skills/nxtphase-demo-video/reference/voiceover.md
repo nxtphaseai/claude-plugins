@@ -53,7 +53,8 @@ npm run voiceover -- --dry-run       # alleen laten zien wat er zou gebeuren
 
 | | |
 |---|---|
-| Stem | `ARIOBKJtltx2F7r1TMzI` (staat als standaard in het script) |
+| Stem Nederlands | `ARIOBKJtltx2F7r1TMzI` (standaard, `--taal=nl`) |
+| Stem Engels | `SYnlsZzyWoEWknEaaYIx` (`--taal=en`) |
 | Model | `eleven_v3` |
 | Sleutel | `ELEVENLABS_API_KEY` in de `.env` van de repo |
 | Stilte na elke zin | `TAIL_S` in `timeline.ts`, 0,45 s |
@@ -62,6 +63,40 @@ npm run voiceover -- --dry-run       # alleen laten zien wat er zou gebeuren
 **Tempo hoort bij het knippen, niet bij het genereren.** `--recut --tempo=1.04` past de
 snelheid aan met `atempo` zonder nieuwe API-kosten. Bewaar daarom altijd de onbewerkte
 opname én de tijdstempels.
+
+## De Engelse variant
+
+Voor het Engelse deel van de demopagina maak je een tweede video. Dat is een kopie van de
+projectmap, `video/<naam>-en`, en niet een schakelaar in hetzelfde project: `timeline.ts`
+houdt één set scenelengtes bij en Engels loopt niet gelijk met Nederlands.
+
+Begin er pas aan als de Nederlandse versie definitief is.
+
+```bash
+cp -r video/<naam> video/<naam>-en
+# in de kopie: src/voiceover.ts vertalen, daarna
+npm run voiceover -- --taal=en
+```
+
+Zet `--taal=en` vast in het `voiceover`-script in de `package.json` van de kopie. Dan pakt
+een gewone `npm run voiceover` daar vanzelf de Engelse stem, ook als iemand anders het
+later draait. Het script drukt de gekozen taal en stem af bij elke run, dus een verkeerde
+combinatie zie je meteen.
+
+Waar het misgaat:
+
+- **`cues` staan in het Nederlands.** Het script zoekt ze letterlijk terug in de
+  karakter-tijdstempels van de opname en faalt hard als een zinsdeel er niet precies één
+  keer in staat. Vertaal ze samen met de tekst.
+- **Neem de nieuwe scenelengtes over.** Engels leest anders, dus het voorstel na het
+  genereren wijkt af van de Nederlandse timeline.
+- **Geen letterlijke vertaling.** Zelfde inhoud, zelfde volgorde, maar geschreven zoals een
+  Engelstalige het zou zeggen. De Engelse verboden woorden staan in `schrijfstijl.md`.
+- **De interface blijft zoals hij is.** Je tekent geen Engelse UI na; dat botst met harde
+  regel 1. Heeft de app een Engelse taalinstelling, neem hem dan in die taal opnieuw op.
+
+De stem is een andere dan de Nederlandse, dus verwacht een eigen ritme. Meet het tempo
+opnieuw met `--recut --tempo=`, dat kost geen API-tegoed.
 
 ## Cues: het beeld aan de stem hangen
 

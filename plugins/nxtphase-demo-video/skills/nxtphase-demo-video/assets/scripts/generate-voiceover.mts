@@ -11,6 +11,7 @@
  * laatste klank van de ene scene en de eerste van de volgende.
  *
  * Opties:
+ *   --taal=nl|en       kiest de vaste stem voor die taal (standaard nl)
  *   --voice=<id>       andere stem (id uit de URL van een stem bij ElevenLabs)
  *   --model=<id>       ander model (standaard eleven_v3)
  *   --tempo=<factor>   spreektempo bij het knippen, 1.0 is onbewerkt
@@ -60,9 +61,28 @@ const arg = (naam: string) => {
 
 const dryRun = process.argv.includes("--dry-run");
 const recut = process.argv.includes("--recut");
-/** Onze vaste stem. Niet per project wisselen: dan klinken de video's niet als één reeks. */
-const STANDAARD_STEM = "ARIOBKJtltx2F7r1TMzI";
-const voiceId = arg("voice") ?? process.env.ELEVENLABS_VOICE_ID ?? STANDAARD_STEM;
+/**
+ * Onze vaste stemmen, één per taal. Niet per project wisselen: dan klinken de
+ * video's niet als één reeks. De Engelse variant van een demo draait met
+ * `--taal=en`, en in een Engels project zet je die vlag in het npm-script zodat
+ * een gewone `npm run voiceover` daar vanzelf de goede stem pakt.
+ */
+const STEMMEN: Record<string, string> = {
+  nl: "ARIOBKJtltx2F7r1TMzI",
+  en: "SYnlsZzyWoEWknEaaYIx",
+};
+
+const taal = arg("taal") ?? arg("lang") ?? "nl";
+
+if (!(taal in STEMMEN)) {
+  console.error(
+    `Onbekende taal "${taal}". Bekend: ${Object.keys(STEMMEN).join(", ")}. ` +
+      "Voor een eenmalige andere stem: --voice=<id>.",
+  );
+  process.exit(1);
+}
+
+const voiceId = arg("voice") ?? process.env.ELEVENLABS_VOICE_ID ?? STEMMEN[taal];
 const modelId = arg("model") ?? "eleven_v3";
 const tempo = Number(arg("tempo") ?? 1.08);
 
@@ -187,7 +207,7 @@ const suggestScenes = (spoken: (number | null)[]) => {
 };
 
 if (dryRun) {
-  console.log(`Model ${modelId}, stem ${voiceId}, tempo ${tempo}\n`);
+  console.log(`Taal ${taal}, model ${modelId}, stem ${voiceId}, tempo ${tempo}\n`);
   VOICEOVER.forEach((line, i) => {
     const tekens = spokenText(line.text).length;
     console.log(`${line.id}: ${tekens} tekens · schatting ${(tekens / 13.5 / tempo).toFixed(1)}s`);
@@ -222,7 +242,7 @@ async function maak() {
       console.error("Zet ELEVENLABS_API_KEY (of gebruik --dry-run).");
       process.exit(1);
     }
-    console.log(`Model ${modelId}, stem ${voiceId}, tempo ${tempo}`);
+    console.log(`Taal ${taal}, model ${modelId}, stem ${voiceId}, tempo ${tempo}`);
     console.log(`Eén opname van ${joined.length} tekens…\n`);
 
     const response = await fetch(
