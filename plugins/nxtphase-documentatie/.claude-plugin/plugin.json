@@ -1,0 +1,14 @@
+{
+  "name": "nxtphase-documentatie",
+  "version": "0.1.0",
+  "description": "Opleverdocumentatie van een NxtPhase-project als invokable skill. Genereert vanuit de projectmap zowel een gebruikershandleiding voor de eindgebruikers als een technische documentatie voor de IT-afdeling, als bewerkbare Word-documenten in de huisstijl. Verifieert elke bewering tegen de broncode en de echte Azure-deployment via read-only commando's, stelt de openstaande afspraken als vraag aan de gebruiker in plaats van ze in te vullen, en legt per bewering de bron vast. Bevat een docx-generator die alleen de standaardbibliotheek van Python nodig heeft.",
+  "author": {
+    "name": "NxtPhase",
+    "email": "marco@nxtphase.ai",
+    "url": "https://nxtphase.ai"
+  },
+  "homepage": "https://github.com/nxtphaseai/claude-plugins/tree/main/plugins/nxtphase-documentatie",
+  "repository": "https://github.com/nxtphaseai/claude-plugins",
+  "keywords": ["documentatie", "oplevering", "handleiding", "docx", "word", "azure", "skill", "nxtphase"],
+  "license": "MIT"
+}

@@ -46,6 +46,7 @@ bash claude-plugins/plugins/agent-eval/install.sh
 | [ask-visual](plugins/ask-visual/)         | Visual `AskUserQuestion`: agent serves a one-shot HTML form (cards, sliders, color pickers, anything) on localhost and feeds the submission back as JSON. |
 | [nxtphase-design](plugins/nxtphase-design/) | The Nxt Phase AI brand & design system as a skill — colors, type, fonts, logos, dot-icon rules, a website UI kit, and a 10-slide deck template. Dieter Rams / Braun-inspired. |
 | [nxtphase-demo-video](plugins/nxtphase-demo-video/) | How we make demo and sales videos: Remotion scaffold, the fixed brand end card, the ElevenLabs voice-over pipeline, showing real interfaces instead of redrawing them, anonymisation rules, a writing-style guide that keeps AI vocabulary out of client copy, and an optional step that publishes the matching demo page in the Notion Demo Library. |
+| [nxtphase-documentatie](plugins/nxtphase-documentatie/) | The two hand-over documents at the end of a project: a user manual for the team that uses the tool and a technical documentation for the IT department that runs it, as editable Word documents in the house style. Verifies every claim against the code and the live Azure deployment, asks what it cannot verify, and ships a standard-library-only docx generator. |
 
 More on the way.
 
