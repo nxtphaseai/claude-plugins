@@ -7,7 +7,7 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.9.0",
+    "version": "0.10.0",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
@@ -41,6 +41,14 @@
       "version": "0.4.0",
       "source": "./plugins/nxtphase-demo-video",
       "keywords": ["video", "demo", "sales", "remotion", "voice-over", "elevenlabs", "notion", "demo-library", "skill", "nxtphase"],
+      "license": "MIT"
+    },
+    {
+      "name": "nxtphase-documentatie",
+      "description": "The two hand-over documents at the end of a project, as an invokable skill. Writes a user manual for the team that uses the tool and a technical documentation for the IT department that runs it, both as editable Word documents in the house style. Verifies every claim against the source code and the live Azure deployment with read-only commands, asks the questions it cannot answer from code instead of guessing, and records the source of each claim. Ships a docx generator that needs nothing but the Python standard library.",
+      "version": "0.1.0",
+      "source": "./plugins/nxtphase-documentatie",
+      "keywords": ["documentatie", "oplevering", "handleiding", "docx", "word", "azure", "skill", "nxtphase"],
       "license": "MIT"
     }
   ]
