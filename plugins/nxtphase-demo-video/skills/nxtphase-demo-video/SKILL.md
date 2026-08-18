@@ -1,8 +1,8 @@
 ---
 name: nxtphase-demo-video
-description: Maak een demo- of sales-video van een NxtPhase-project met Remotion. Gebruik deze skill bij elk verzoek om een demovideo, salesvideo, productvideo of screencast van een tool die we hebben gebouwd, en bij het aanpassen van een bestaande demo-video. Bevat de huisstijl, de vaste eindkaart, de voice-overpijplijn met ElevenLabs en de werkwijze om interfaces exact te tonen in plaats van na te tekenen.
+description: Maak een demo- of sales-video van een NxtPhase-project met Remotion, en publiceer de bijbehorende demopagina in de Notion Demo Library. Gebruik deze skill bij elk verzoek om een demovideo, salesvideo, productvideo of screencast van een tool die we hebben gebouwd, bij het aanpassen van een bestaande demo-video, en bij het aanmaken van een demopagina in de Demo Library op basis van een projectmap plus een opname of SharePoint-link. Bevat de huisstijl, de vaste eindkaart, de voice-overpijplijn met ElevenLabs, de werkwijze om interfaces exact te tonen in plaats van na te tekenen, en het paginasjabloon met de schrijfstijl van de Demo Library.
 metadata:
-  tags: remotion, video, demo, sales, voice-over, elevenlabs, nxtphase
+  tags: remotion, video, demo, sales, voice-over, elevenlabs, notion, demo-library, nxtphase
 ---
 
 # Demo-video's van NxtPhase
@@ -99,6 +99,25 @@ feedback en vangt precies de dingen die anders alsnog terugkomen.
 
 ---
 
+### Stap 6 (optioneel): de demopagina in de Demo Library
+
+Vraag na oplevering of er ook een pagina in de **NXT Phase AI - Demo Library** moet komen.
+Dat is de Notion-lijst met demopagina's per afdeling, waarvan elke pagina los deelbaar is
+met een prospect.
+
+Draai deze stap ook los, zonder video-opdracht, als iemand vraagt om een demopagina bij een
+bestaand project. Je hebt dan de projectmap nodig plus een opname of een SharePoint-link.
+
+Volgorde: Notion-projectpagina opzoeken in de code, feiten uit het project halen, de teksten
+schrijven, ze laten goedkeuren, en pas dan de pagina aanmaken met `notion-create-pages`.
+Het paginasjabloon, de schrijfstijl en de drie routes om de video in de pagina te krijgen
+staan in `reference/demopagina.md`.
+
+Twee dingen die daar misgaan als je ze niet leest: de Notion-MCP kan maar 20 MiB per upload
+aan, en een SharePoint-link speelt niet af in een `<video>`-blok.
+
+---
+
 ## Huisstijl
 
 | | |
@@ -182,4 +201,6 @@ mailclient, en daarna gaat het de deur uit.
 - `reference/voiceover.md` — toon, ElevenLabs-pijplijn, stem, scenelengtes
 - `reference/fonts.md` — welk font waarvandaan komt, en wat je wel en niet mag meeleveren
 - `reference/checklist.md` — nakijklijst voor oplevering
+- `reference/demopagina.md` — het paginasjabloon en de schrijfstijl van de Demo Library in
+  Notion, en hoe de video in de pagina komt
 - `assets/` — kant-en-klare bestanden, inclusief de eindkaart
