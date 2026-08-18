@@ -106,7 +106,52 @@ feedback en vangt precies de dingen die anders alsnog terugkomen.
 
 ---
 
-### Stap 6 (optioneel): de demopagina in de Demo Library
+### Stap 6 (optioneel): de Engelse variant
+
+Stel na oplevering van de Nederlandse video voor om er een Engelse variant naast te
+zetten. De demopagina heeft een Engels deel met een eigen `## Watch the Demo`, en dat
+staat nu op de meeste pagina's leeg. Een prospect die de Engelse kant leest, krijgt dan
+geen video te zien.
+
+Doe dit **pas als de Nederlandse versie definitief is**. Zolang er nog aan de scenes of de
+tekst geschaafd wordt, onderhoud je anders twee projecten tegelijk.
+
+De Engelse variant is een **kopie van de projectmap**, niet een schakelaar in hetzelfde
+project:
+
+```bash
+cp -r video/<naam> video/<naam>-en
+```
+
+Dat moet, want `timeline.ts` bevat één set scenelengtes en Engels leest korter of langer
+dan Nederlands. Eén project kan die twee niet allebei kloppend houden.
+
+In de kopie vertaal je `src/voiceover.ts`, zet je de taalvlag in het npm-script en genereer
+je opnieuw:
+
+```bash
+npm run voiceover -- --taal=en     # of zet --taal=en vast in package.json
+```
+
+De Engelse stem is `SYnlsZzyWoEWknEaaYIx` en staat als standaard voor `--taal=en` in
+`scripts/generate-voiceover.mts`. Je hoeft dus geen id op te zoeken.
+
+Drie dingen die hier misgaan, met de rest in `reference/voiceover.md`:
+
+- **De `cues` zijn Nederlandse zinsdelen.** Vertaal je die niet mee, dan vindt het script
+  ze niet terug in de opname en faalt het hard. Dat is bedoeld gedrag, geen bug.
+- **De scenelengtes veranderen.** Neem het nieuwe voorstel over, ga er niet van uit dat de
+  Nederlandse timeline past.
+- **De interface in beeld blijft zoals hij is.** Harde regel 1 geldt nog steeds: je tekent
+  geen Engelse UI na. Heeft de app zelf een Engelse taalinstelling, neem hem dan opnieuw
+  op in die taal.
+
+De Engelse render gaat naar de `out/` van de kopie. Geef het bestand een eigen naam, want
+straks staan er twee video's op één Notion-pagina.
+
+---
+
+### Stap 7 (optioneel): de demopagina in de Demo Library
 
 Vraag na oplevering of er ook een pagina in de **NXT Phase AI - Demo Library** moet komen.
 Dat is de Notion-lijst met demopagina's per afdeling, waarvan elke pagina los deelbaar is
@@ -212,7 +257,8 @@ mailclient, en daarna gaat het de deur uit.
 - `reference/exactheid.md` — interfaces exact tonen: CSS extraheren, markup porten, de
   echte renderer aanroepen
 - `reference/anonimiseren.md` — alles wat naar de klant verwijst eruit halen
-- `reference/voiceover.md` — toon, ElevenLabs-pijplijn, stem, scenelengtes
+- `reference/voiceover.md` — toon, ElevenLabs-pijplijn, de stem per taal, scenelengtes, en
+  hoe je de Engelse variant naast de Nederlandse zet
 - `reference/fonts.md` — welk font waarvandaan komt, en wat je wel en niet mag meeleveren
 - `reference/schrijfstijl.md` — verboden woorden en zinsconstructies, en waarom er nooit
   een em-dash in een klanttekst staat. Geldt voor de pagina en voor de voice-over

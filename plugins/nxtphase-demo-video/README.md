@@ -29,6 +29,13 @@ timestamps.
 tagline, with the proportions between logo and tagline calculated from the logo
 file and the font metrics rather than eyeballed. Copy it unchanged.
 
+**An optional English variant.** Once the Dutch video is final, the skill offers to
+put an English one beside it, as a copy of the project folder rather than a switch
+inside it: `timeline.ts` holds one set of scene lengths and English does not run in
+step with Dutch. The voice-over script takes `--taal=en` and already knows which
+ElevenLabs voice that is. This exists because the demo page has an English half whose
+`## Watch the Demo` is empty on most pages today.
+
 **An optional last step**: publishing the matching demo page in the Notion
 **NXT Phase AI - Demo Library**. It finds the project's Notion page from the
 codebase, pulls the facts from the project, writes the Dutch and English copy in
