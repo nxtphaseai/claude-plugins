@@ -62,6 +62,16 @@ Opgebouwd uit echte feedback. Loop hem af vóór je oplevert, dan komt het niet 
 - [ ] Stylesheets opnieuw geëxtraheerd na een wijziging in de app.
 - [ ] Gegenereerde HTML opnieuw gegenereerd na een wijziging in de content.
 
+## Demopagina, als die er komt
+
+Alleen relevant als stap 6 is gedraaid. De volledige lijst staat in `demopagina.md`.
+
+- [ ] Video speelt af, getest zonder NXT Phase-account.
+- [ ] Bij een SharePoint-link: sharing staat op "Iedereen met de link", door de gebruiker bevestigd.
+- [ ] Nederlandse en Engelse versie hebben hetzelfde aantal bullets.
+- [ ] CTA-blok letterlijk overgenomen, beide talen.
+- [ ] Icon en plek onder de juiste sectiekop nog handmatig zetten, en dat ook gezegd.
+
 ## Bij oplevering vertellen
 
 - Wat er is gewijzigd en waarom.

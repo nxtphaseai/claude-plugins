@@ -87,14 +87,34 @@ if (getagd.length && !supportsTags) {
 }
 
 /**
+ * Eén argument dichttimmeren voor de shell die het straks uit elkaar haalt. We
+ * quoten altijd, ook als er niets bijzonders in staat: dan is er geen tweede
+ * regel die kan afwijken van de eerste.
+ *
+ * POSIX: binnen enkele quotes is alles letterlijk, backslash incluis. Alleen de
+ * enkele quote zelf past er niet in, dus die sluiten we af, zetten we er als
+ * '\'' buiten neer, en daarna openen we opnieuw.
+ *
+ * Windows: cmd.exe kent geen enkele quotes, daar zijn dubbele quotes het enige
+ * gereedschap. Binnen die quotes is niets meer bijzonder behalve de dubbele
+ * quote zelf; die verdubbelen we, want "" leest als een letterlijke quote en
+ * laat cmd zijn quote-stand houden. De backslashes vlak vóór een quote en aan
+ * het eind van het argument verdubbelen we ook, anders escapen die alsnog de
+ * quote die erop volgt en staat de rest van de regel open voor de shell.
+ */
+const quote = (p: string) =>
+  process.platform === "win32"
+    ? `"${p.replace(/(\\*)"/g, '$1$1""').replace(/(\\*)$/, "$1$1")}"`
+    : `'${p.replace(/'/g, "'\\''")}'`;
+
+/**
  * Een commando draaien en ALLES teruggeven wat het zegt. ffprobe schrijft zijn
  * informatie naar stderr, niet naar stdout, dus wie alleen stdout leest krijgt
- * niets te zien. Het commando gaat als één string naar de shell: een args-lijst
- * met `shell: true` is in node afgeraden.
+ * niets te zien. Het commando gaat als één string naar de shell, want `npx` is
+ * op Windows een .cmd en die start node niet zonder shell.
  */
 const run = (parts: string[]) => {
-  if (parts.length === 0) throw new Error("run() vereist minstens één commando-onderdeel.");
-  const r = spawnSync(parts[0], parts.slice(1), { encoding: "utf8" });
+  const r = spawnSync(parts.map(quote).join(" "), { shell: true, encoding: "utf8" });
   return { status: r.status, output: `${r.stdout ?? ""}${r.stderr ?? ""}` };
 };
 

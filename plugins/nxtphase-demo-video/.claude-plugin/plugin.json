@@ -1,7 +1,7 @@
 {
   "name": "nxtphase-demo-video",
-  "version": "0.1.0",
-  "description": "How Nxt Phase AI makes demo and sales videos, as an invokable skill. Remotion project scaffold, the fixed brand end card, the ElevenLabs voice-over pipeline, and the method for showing real interfaces instead of redrawing them — plus the anonymisation rules and a checklist built from real client feedback.",
+  "version": "0.2.0",
+  "description": "How Nxt Phase AI makes demo and sales videos, as an invokable skill. Remotion project scaffold, the fixed brand end card, the ElevenLabs voice-over pipeline, and the method for showing real interfaces instead of redrawing them — plus the anonymisation rules, a checklist built from real client feedback, and an optional step that publishes the matching demo page in the Notion Demo Library.",
   "author": {
     "name": "NxtPhase",
     "email": "marco@nxtphase.ai",
@@ -9,6 +9,6 @@
   },
   "homepage": "https://github.com/nxtphaseai/claude-plugins/tree/main/plugins/nxtphase-demo-video",
   "repository": "https://github.com/nxtphaseai/claude-plugins",
-  "keywords": ["video", "demo", "sales", "remotion", "voice-over", "elevenlabs", "skill", "nxtphase"],
+  "keywords": ["video", "demo", "sales", "remotion", "voice-over", "elevenlabs", "notion", "demo-library", "skill", "nxtphase"],
   "license": "MIT"
 }

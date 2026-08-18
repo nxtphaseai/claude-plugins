@@ -28,10 +28,20 @@ timestamps.
 tagline, with the proportions between logo and tagline calculated from the logo
 file and the font metrics rather than eyeballed. Copy it unchanged.
 
-**Five reference documents**: showing interfaces exactly, anonymising, the
+**An optional last step**: publishing the matching demo page in the Notion
+**NXT Phase AI - Demo Library**. It finds the project's Notion page from the
+codebase, pulls the facts from the project, writes the Dutch and English copy in
+the house style of the existing pages, and creates the page under the Library.
+It can also run standalone for a project that already has a recording. The
+video-embedding part is the fiddly bit and the reference document covers it: the
+Notion MCP tops out at 20 MiB per upload, and a SharePoint link will not play
+inside a `<video>` block.
+
+**Six reference documents**: showing interfaces exactly, anonymising, the
 voice-over pipeline and tone, fonts and their licences, the pitfalls that cost
 real time (shimmering scrolls, the tip of the mouse cursor, transparent cards,
-layouts that jump), and a delivery checklist built from actual client feedback.
+layouts that jump), a delivery checklist built from actual client feedback, and
+the Demo Library page template with its writing style.
 
 ## Install
 
@@ -68,7 +78,13 @@ its licence allows use but not redistribution. It is loaded from Fontshare durin
 the render and falls back to Inter without a network. See
 `skills/nxtphase-demo-video/reference/fonts.md`.
 
+## Notion access
+
+The Demo Library step needs the Notion MCP connected, with access to the **Sales
+Wiki** teamspace. Without it the rest of the skill works fine; that step just
+cannot run.
+
 ## Related
 
 `nxtphase-design` covers the brand and design system in general. This plugin is
-only about video.
+about video and the demo page that goes with it.
