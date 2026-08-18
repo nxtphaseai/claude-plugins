@@ -38,6 +38,8 @@ Opgebouwd uit echte feedback. Loop hem af vóór je oplevert, dan komt het niet 
 ## Tekst en stem
 
 - [ ] Geen drieslagen of slogantaal.
+- [ ] Geen em-dash of en-dash, in geen enkele tekst. Zoek erop, raad er niet naar.
+- [ ] Geen woord uit de verboden lijst in `schrijfstijl.md`.
 - [ ] Geen verzonnen cijfers.
 - [ ] Getallen voluit geschreven.
 - [ ] Schermteksten uit als er een voice-over is.
@@ -70,7 +72,11 @@ Alleen relevant als stap 6 is gedraaid. De volledige lijst staat in `demopagina.
 - [ ] Bij een SharePoint-link: sharing staat op "Iedereen met de link", door de gebruiker bevestigd.
 - [ ] Nederlandse en Engelse versie hebben hetzelfde aantal bullets.
 - [ ] CTA-blok letterlijk overgenomen, beide talen.
-- [ ] Icon en plek onder de juiste sectiekop nog handmatig zetten, en dat ook gezegd.
+- [ ] Pagina is een duplicaat, dus icoon en banner staan er.
+- [ ] Em-dashes uit de bronpagina zijn weg, ook in de Engelse versie.
+- [ ] Geen tekst of video van de bronpagina blijven staan, en de titel is niet `<bronnaam> (1)`.
+- [ ] Geen bestaande demopagina verwijderd of overschreven.
+- [ ] Plek onder de juiste sectiekop nog handmatig zetten, en dat ook gezegd.
 
 ## Bij oplevering vertellen
 

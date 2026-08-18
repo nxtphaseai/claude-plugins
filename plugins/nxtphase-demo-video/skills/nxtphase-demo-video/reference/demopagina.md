@@ -11,6 +11,27 @@ Bovenliggende pagina: `https://app.notion.com/p/365e4696d12d81aba638c718a777d73f
 
 ---
 
+## Nooit een bestaande demopagina verwijderen of overschrijven
+
+Dit is de enige harde regel in dit document. Bestaande pagina's in de Demo Library zijn
+klantmateriaal: ze zijn los gedeeld met prospects, dus er lopen links naar buiten die je
+niet ziet. Een pagina die weg is of leeggemaakt, is voor die prospect een dode link.
+
+- Verwijder nooit een pagina in de Demo Library, ook niet als hij verouderd, dubbel of
+  verkeerd lijkt. Meld het en laat de keuze aan de mens.
+- Draai `replace_content` uitsluitend op het duplicaat dat je zelf net hebt gemaakt, nooit
+  op de bronpagina of op een andere bestaande pagina.
+- Controleer vóór elke schrijfactie dat de `page_id` die van het verse duplicaat is en niet
+  die van de bron. Die twee liggen in het gesprek vlak bij elkaar, en dat is precies hoe
+  het misgaat.
+- Ging het toch mis, zeg het dan meteen. Notion heeft versiegeschiedenis en een prullenbak,
+  dus snel gemeld is te herstellen; stilzwijgend doorwerken niet.
+
+Opruimen van testpagina's die je zelf hebt aangemaakt mag wel, maar vraag het eerst en noem
+de pagina bij naam.
+
+---
+
 ## Wat je nodig hebt voor je begint
 
 | | |
@@ -19,6 +40,7 @@ Bovenliggende pagina: `https://app.notion.com/p/365e4696d12d81aba638c718a777d73f
 | De projectmap | code en documentatie, waar de feiten vandaan komen |
 | De Notion-projectpagina | staat meestal in de `README`, in een comment of in de docs |
 | Sector en afdeling | uit het project of uit de Notion-pagina |
+| Een bronpagina | een bestaande demopagina in dezelfde stijl, die je dupliceert |
 
 **Zoek de Notion-link zelf op** voor je erom vraagt:
 
@@ -39,9 +61,10 @@ die is met terugwerkende kracht lastig te reconstrueren uit alleen de code.
 
 ## Vaste paginastructuur
 
-Titel is de demonaam in het Nederlands, zonder het woord "demo" erin. Icon is
-`NXT_PHASE_-_AVATAR_8.jpg`, hetzelfde als de andere pagina's; die stel je in de UI in,
-want via de MCP kun je alleen een emoji of een externe URL meegeven.
+Titel is de demonaam in het Nederlands, zonder het woord "demo" erin. Icon en banner
+komen uit de bronpagina die je dupliceert, zie "De pagina aanmaken". Zet ze niet zelf:
+via de MCP kun je alleen een emoji of een externe URL meegeven, en het huisicoon
+`NXT_PHASE_-_AVATAR_8.jpg` is een geüploade afbeelding.
 
 ```
 ## Bekijk de Demo
@@ -161,6 +184,11 @@ enthousiast te zijn. Geen superlatieven, geen uitleg over hoe het model werkt, g
 zonder ontkoppeling. Waar techniek nodig is staat de functie erbij: "visuele similarity
 search: upload een schets of foto en het systeem vindt de meest gelijkende profielen".
 
+**Lees `schrijfstijl.md` voor je begint te schrijven.** Daar staan de verboden woorden en
+zinsconstructies, en de harde regel dat er nooit een em-dash in de tekst staat. Let op: de
+bestaande pagina's in de library houden zich daar niet aan, dus kopieer hun formuleringen
+niet.
+
 De lezer wordt alleen in de CTA met "je" aangesproken, in de rest van de pagina derde
 persoon.
 
@@ -242,19 +270,52 @@ pagina.
 
 ## De pagina aanmaken
 
-Gebruik `notion-create-pages` met `parent: {type: "page_id", page_id: "365e4696d12d81aba638c718a777d73f"}`
-en de titel in `properties.title`. De content is Notion-flavored Markdown; lees
-`notion://docs/enhanced-markdown-spec` via `notion-fetch` als je twijfelt over de syntax
-van `<columns>`, `<callout>` of `<table>`. Gebruik tabs voor de indentatie binnen die
-blokken, geen spaties.
+**Maak de pagina niet met `notion-create-pages`.** Dan komt hij zonder icoon en zonder
+banner binnen, en valt hij meteen op tussen de andere pagina's. Het icoon is een geüploade
+afbeelding en de MCP kan alleen een emoji of een externe URL zetten, dus dat is achteraf
+niet te repareren zonder de UI.
+
+Dupliceer in plaats daarvan een bestaande demopagina en overschrijf de inhoud. Icoon,
+banner en de plek onder de Demo Library komen dan gratis mee.
+
+**Kies de bronpagina op stijl.** Het duplicaat erft de opmaak, dus neem een pagina uit
+dezelfde stijlgeneratie als degene die je gaat schrijven: narratief of zakelijk, zie
+"Toon". Klantmail Categoriseren en Routeren is de narratieve; Productie Planning de
+zakelijke.
+
+De volgorde luistert, want tussen stap 1 en 4 staat er een pagina in de Library met de
+video van een andere klant erin:
+
+**1. Upload eerst de video** volgens "De video in de pagina krijgen" en houd de
+`suggested_markdown` bij de hand. Doe dit vóór het dupliceren, dan is het venster waarin de
+kopie nog de oude demo toont zo klein mogelijk.
+
+**2. `notion-duplicate-page`** met de `page_id` van de bronpagina. Je krijgt direct een
+`page_id` en `page_url` terug, maar het vullen gebeurt asynchroon: haal de nieuwe pagina
+één keer op met `notion-fetch` en controleer dat de inhoud er staat voor je verdergaat. Het
+duplicaat landt onder dezelfde ouder als het origineel, dus als de bronpagina goed hangt
+staat de kopie meteen onder de Demo Library. De titel is dan nog `<bronnaam> (1)`.
+
+**3. `notion-update-page`** met `command: "update_properties"` en `properties: {"title": "…"}`
+voor de nieuwe demonaam. Doe dit meteen na het dupliceren, want in het overzicht staat nu
+een pagina die "Productie Planning (1)" heet.
+
+**4. `notion-update-page`** met `command: "replace_content"` en de volledige nieuwe pagina
+in `new_str`, Nederlands en Engels in één keer, inclusief het nieuwe `<video>`-blok. Icoon
+en banner blijven daarbij staan; die zitten niet in de content. `allow_deleting_content` is
+niet nodig zolang de bronpagina geen subpagina's of databases bevat, en dat hebben de
+demopagina's niet. De oude video is een bijlage, geen subpagina, en verdwijnt gewoon mee.
+
+De content is Notion-flavored Markdown; lees `notion://docs/enhanced-markdown-spec` via
+`notion-fetch` als je twijfelt over de syntax van `<columns>`, `<callout>` of `<table>`.
+Gebruik tabs voor de indentatie binnen die blokken, geen spaties.
 
 **Toon de teksten eerst.** Print de Nederlandse en Engelse versie in het gesprek en laat ze
-goedkeuren voor je de pagina aanmaakt. Dit is klantmateriaal en het gaat vaak ongewijzigd
-naar een prospect.
+goedkeuren voor je stap 4 draait. Dit is klantmateriaal en het gaat vaak ongewijzigd naar
+een prospect.
 
-Na het aanmaken doe je zelf drie dingen niet, en zeg je dat er ook bij:
+Na het aanmaken doe je zelf twee dingen niet, en zeg je dat er ook bij:
 
-- Het page-icon instellen (moet in de UI, de MCP kan alleen emoji of externe URL)
 - De pagina toevoegen aan de juiste sectiekop op de Library-overzichtspagina
 - De pagina publiceren of delen
 
@@ -271,4 +332,7 @@ Na het aanmaken doe je zelf drie dingen niet, en zeg je dat er ook bij:
 - [ ] CTA-blok letterlijk overgenomen, beide talen
 - [ ] Nederlandse en Engelse versie hebben hetzelfde aantal bullets
 - [ ] Pagina staat onder de Demo Library en niet ergens los in de workspace
-- [ ] Icon nog handmatig zetten, en de pagina onder de juiste sectiekop hangen
+- [ ] Titel is de nieuwe demonaam, niet `<bronnaam> (1)`
+- [ ] Geen tekst, bullet, tabelrij of video van de bronpagina blijven staan
+- [ ] Icoon en banner staan er, overgenomen uit de bronpagina
+- [ ] De pagina nog onder de juiste sectiekop hangen

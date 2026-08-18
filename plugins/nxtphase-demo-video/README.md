@@ -12,12 +12,13 @@ seven. Ask internally for the recordings.
 
 ## What it gives an agent
 
-**Two hard rules.** Interfaces are *shown*, never redrawn: the CSS and markup
+**Three hard rules.** Interfaces are *shown*, never redrawn: the CSS and markup
 come straight out of the product's source, so the video changes when the app
-does. And nothing traceable to the client goes in — no name, logo, product
+does. And nothing traceable to the client goes in: no name, logo, product
 names, real room or menu names, real data, or photos of existing places and
 people. Brand colours get shifted too, because a house style is as recognisable
-as a name.
+as a name. And nothing a client reads or hears is written in AI English or AI
+Dutch: no "seamless", no "not just X, it's Y", and no em-dashes anywhere.
 
 **A working scaffold** in `assets/`: theme, timing model, animation helpers,
 window and cursor components, a CSS extraction script, and an ElevenLabs
@@ -31,17 +32,26 @@ file and the font metrics rather than eyeballed. Copy it unchanged.
 **An optional last step**: publishing the matching demo page in the Notion
 **NXT Phase AI - Demo Library**. It finds the project's Notion page from the
 codebase, pulls the facts from the project, writes the Dutch and English copy in
-the house style of the existing pages, and creates the page under the Library.
-It can also run standalone for a project that already has a recording. The
-video-embedding part is the fiddly bit and the reference document covers it: the
-Notion MCP tops out at 20 MiB per upload, and a SharePoint link will not play
-inside a `<video>` block.
+the house style of the existing pages, and publishes it under the Library. It can
+also run standalone for a project that already has a recording.
 
-**Six reference documents**: showing interfaces exactly, anonymising, the
+The page is made by **duplicating an existing demo page** and replacing its
+contents, not by creating a blank one. A created page arrives with no icon and no
+banner, and neither can be set over the MCP because both are uploaded images.
+Duplicating carries them over, verified on a real copy. Existing demo pages are
+never deleted or overwritten: they are shared with prospects individually, so
+links to them exist outside our view.
+
+The video is the fiddly part and the reference document covers it: the Notion MCP
+tops out at 20 MiB per upload, and a SharePoint link will not play inside a
+`<video>` block.
+
+**Seven reference documents**: showing interfaces exactly, anonymising, the
 voice-over pipeline and tone, fonts and their licences, the pitfalls that cost
 real time (shimmering scrolls, the tip of the mouse cursor, transparent cards,
-layouts that jump), a delivery checklist built from actual client feedback, and
-the Demo Library page template with its writing style.
+layouts that jump), a delivery checklist built from actual client feedback, the
+Demo Library page template, and a writing-style document that bans em-dashes and
+the usual AI vocabulary from anything a client reads or hears.
 
 ## Install
 
@@ -73,7 +83,7 @@ succeeds, so check the end card with a still. The *Tight* cut shipped by the
 `nxtphase-design` plugin is not a substitute: its letter widths differ, and the
 tagline width in `Outro.tsx` is derived from the regular Italic.
 
-Switzer, used for the framing text, is deliberately absent for the same reason —
+Switzer, used for the framing text, is deliberately absent for the same reason:
 its licence allows use but not redistribution. It is loaded from Fontshare during
 the render and falls back to Inter without a network. See
 `skills/nxtphase-demo-video/reference/fonts.md`.

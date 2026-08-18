@@ -11,6 +11,10 @@ mogen ("Maar waar begin je?"). Geen zinnen die alleen maar een overgang zijn.
 waar het ook is. Eén gewone zin die hetzelfde zegt is beter: "Ook op een drukke dag ziet elke
 offerte er zo uit." Als je een drieslag opschrijft, herschrijf hem.
 
+De verboden woorden en zinsconstructies staan in `schrijfstijl.md`, en die gelden ook hier.
+Een em-dash in een script is bovendien dubbel vervelend: de stem leest hem als een pauze op
+een plek waar je die niet wilt.
+
 Verder:
 
 - Schrijf getallen voluit: "drie weken", niet "3 weken". Het stemmodel leest dat betrouwbaarder.
