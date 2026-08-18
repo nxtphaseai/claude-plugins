@@ -16,7 +16,7 @@ Deze skill gaat over *hoe wij het doen*.
 
 ---
 
-## De twee harde regels
+## De drie harde regels
 
 **1. De interface wordt getoond, niet nagetekend.** Als een scherm van ons is, komt de
 CSS en de markup letterlijk uit de broncode. Verandert de app, dan verandert de video
@@ -28,6 +28,13 @@ bedrijfsnaam, geen afkorting daarvan, geen logo of beeldmerk, geen productnamen 
 leveranciers, geen echte zaal-, afdelings- of menunamen, geen echte klantdata, geen
 foto's van bestaande locaties of personen. Ook de themakleur verschuiven, want een
 huisstijl is net zo herkenbaar als een naam. Zie `reference/anonimiseren.md`.
+
+**3. Geen AI-taal, en nooit een em-dash.** Alles wat de klant leest of hoort is gewoon
+Nederlands: de voice-over, de schermteksten, de demopagina, de mail erbij. Geen
+"naadloos", geen "krachtig", geen "het is niet alleen X, het is Y", en geen em-dash (—)
+of en-dash (–) als leesteken. Herschrijf de zin, of gebruik een komma of een punt. De
+volledige lijst met verboden woorden en constructies staat in `reference/schrijfstijl.md`,
+en die lees je voor je begint te schrijven.
 
 ---
 
@@ -109,12 +116,19 @@ Draai deze stap ook los, zonder video-opdracht, als iemand vraagt om een demopag
 bestaand project. Je hebt dan de projectmap nodig plus een opname of een SharePoint-link.
 
 Volgorde: Notion-projectpagina opzoeken in de code, feiten uit het project halen, de teksten
-schrijven, ze laten goedkeuren, en pas dan de pagina aanmaken met `notion-create-pages`.
-Het paginasjabloon, de schrijfstijl en de drie routes om de video in de pagina te krijgen
-staan in `reference/demopagina.md`.
+schrijven, ze laten goedkeuren, en pas dan de pagina maken. Dat laatste doe je door een
+bestaande demopagina te **dupliceren** en de inhoud te overschrijven, niet met
+`notion-create-pages`. Een nieuw aangemaakte pagina komt zonder icoon en banner binnen, en
+die zijn via de MCP niet te zetten omdat het geüploade afbeeldingen zijn. Het paginasjabloon,
+de schrijfstijl en de drie routes om de video in de pagina te krijgen staan in
+`reference/demopagina.md`.
 
-Twee dingen die daar misgaan als je ze niet leest: de Notion-MCP kan maar 20 MiB per upload
-aan, en een SharePoint-link speelt niet af in een `<video>`-blok.
+**Verwijder of overschrijf nooit een bestaande demopagina.** Ze zijn los gedeeld met
+prospects, dus er lopen links naar buiten die je niet ziet. `replace_content` gaat
+uitsluitend op het duplicaat dat je zelf net hebt gemaakt.
+
+Twee dingen die daarnaast misgaan als je `demopagina.md` niet leest: de Notion-MCP kan maar
+20 MiB per upload aan, en een SharePoint-link speelt niet af in een `<video>`-blok.
 
 ---
 
@@ -200,6 +214,8 @@ mailclient, en daarna gaat het de deur uit.
 - `reference/anonimiseren.md` — alles wat naar de klant verwijst eruit halen
 - `reference/voiceover.md` — toon, ElevenLabs-pijplijn, stem, scenelengtes
 - `reference/fonts.md` — welk font waarvandaan komt, en wat je wel en niet mag meeleveren
+- `reference/schrijfstijl.md` — verboden woorden en zinsconstructies, en waarom er nooit
+  een em-dash in een klanttekst staat. Geldt voor de pagina en voor de voice-over
 - `reference/checklist.md` — nakijklijst voor oplevering
 - `reference/demopagina.md` — het paginasjabloon en de schrijfstijl van de Demo Library in
   Notion, en hoe de video in de pagina komt
