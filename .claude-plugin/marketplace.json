@@ -7,7 +7,7 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.10.0",
+    "version": "0.11.0",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
@@ -49,6 +49,14 @@
       "version": "0.1.0",
       "source": "./plugins/nxtphase-documentatie",
       "keywords": ["documentatie", "oplevering", "handleiding", "docx", "word", "azure", "skill", "nxtphase"],
+      "license": "MIT"
+    },
+    {
+      "name": "deploy-nxtphase-demo",
+      "description": "Puts any app on a <name>.demo.nxtphase.ai domain, as an invokable skill. Explores the codebase, creates the Railway project and service in the shared demos workspace, registers the custom domain, writes the CNAME and TXT records in Cloudflare in the order that avoids a cached NXDOMAIN, uploads the source, and verifies the URL answers. Writes a state file so later re-deploys are one step. Ships no credentials: it reads RAILWAY_API_TOKEN and CLOUDFLARE_TOKEN from a .env file the user creates, and tells them to ask a developer on the team for the values.",
+      "version": "0.1.0",
+      "source": "./plugins/deploy-nxtphase-demo",
+      "keywords": ["deploy", "railway", "cloudflare", "dns", "demo", "skill", "nxtphase"],
       "license": "MIT"
     }
   ]
