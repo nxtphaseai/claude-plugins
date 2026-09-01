@@ -89,10 +89,13 @@ placeholder, stop and tell the user:
 > CLOUDFLARE_TOKEN=<cloudflare api token>
 > ```
 >
-> Ask one of the developers on the team for the two values. They belong to the shared
-> "Nxtphase AI demos" Railway workspace and the `nxtphase.ai` zone in Cloudflare, so
-> whoever set those up can hand them over. Have them send the values through a password
-> manager or another secure channel, not through chat, a ticket, or a Notion page.
+> **Both values are in our shared password manager.** Look for the entries for the
+> "Nxtphase AI demos" Railway workspace and the `nxtphase.ai` Cloudflare zone, and copy
+> them straight into `.env`.
+>
+> If you cannot find them, or you do not have access to that vault yet, ask one of the
+> developers on the team. Have them share the values through the password manager, not
+> through chat, a ticket, or a Notion page.
 >
 > If you would rather mint your own tokens, `references/tokens.md` lists the exact
 > permissions each one needs.

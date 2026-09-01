@@ -17,10 +17,10 @@ RAILWAY_API_TOKEN=<railway account token>
 CLOUDFLARE_TOKEN=<cloudflare api token>
 ```
 
-**Ask a developer on the team for both values.** They belong to shared infrastructure, the
-"Nxtphase AI demos" workspace on Railway and the `nxtphase.ai` zone on Cloudflare, so
-whoever set those up can hand them over. Have them sent through a password manager or
-another encrypted channel, not through chat, a ticket, or a Notion page.
+**Both values are in our shared password manager**, under the "Nxtphase AI demos" Railway
+workspace and the `nxtphase.ai` Cloudflare zone. Copy them from there into `.env`. No
+access to that vault yet, or the entries are missing? Ask a developer on the team, and have
+them shared through the password manager, not through chat, a ticket, or a Notion page.
 
 Prefer to mint your own? `skills/deploy-nxtphase-demo/references/tokens.md` lists the exact
 permissions each token needs, plus a one-line check per token to confirm it works. A

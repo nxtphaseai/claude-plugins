@@ -105,9 +105,10 @@ Next: the skill ships with no tokens. In the app you want to deploy, create a
     RAILWAY_API_TOKEN=<railway account token>
     CLOUDFLARE_TOKEN=<cloudflare api token>
 
-Ask a developer on the team for both values; they belong to the shared
-"Nxtphase AI demos" Railway workspace and the nxtphase.ai Cloudflare zone. Have
-them sent through a password manager, not through chat or a Notion page.
+Both values are in our shared password manager, under the "Nxtphase AI demos"
+Railway workspace and the nxtphase.ai Cloudflare zone. No access to that vault
+yet? Ask a developer on the team to share them through the password manager,
+not through chat or a Notion page.
 
 A template lives at assets/env.example inside the installed skill, and
 references/tokens.md documents the exact permissions if you mint your own.

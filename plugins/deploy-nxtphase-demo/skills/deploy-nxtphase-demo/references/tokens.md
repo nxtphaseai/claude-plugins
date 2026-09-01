@@ -13,13 +13,16 @@ directory as `.env` and fill in the two values.
 
 ## Where to get the values
 
-**Ask a developer on the team.** Both tokens belong to shared infrastructure: the
-"Nxtphase AI demos" workspace on Railway and the `nxtphase.ai` zone on Cloudflare. Whoever
-set those up already has working tokens and can hand them over.
+**Both tokens are in our shared password manager.** They belong to shared infrastructure,
+the "Nxtphase AI demos" workspace on Railway and the `nxtphase.ai` zone on Cloudflare, so
+they live in the team vault under those names rather than with any one person. Copy them
+from there into `.env`.
 
-Ask for them through a password manager, an encrypted note, or another secure channel.
-Not through chat, not in a ticket, not in a Notion page, and not in a screenshot. A token
-that has been posted somewhere readable is a token that needs rotating.
+No access to that vault yet, or the entries are not there? Ask a developer on the team.
+Whoever set the workspace and the zone up has working tokens and can share them, through
+the password manager. Not through chat, not in a ticket, not in a Notion page, and not in
+a screenshot. A token that has been posted somewhere readable is a token that needs
+rotating.
 
 If you would rather mint your own, both are self-service:
 

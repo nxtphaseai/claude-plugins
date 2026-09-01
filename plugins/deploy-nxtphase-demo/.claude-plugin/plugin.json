@@ -1,7 +1,7 @@
 {
   "name": "deploy-nxtphase-demo",
   "version": "0.1.0",
-  "description": "Deploy any app to the team's Railway workspace and put it on a <name>.demo.nxtphase.ai domain, as an invokable skill. Explores the codebase, creates the Railway project and service, wires DNS through Cloudflare, deploys, and verifies. Ships no credentials: the skill reads RAILWAY_API_TOKEN and CLOUDFLARE_TOKEN from a .env file that the user creates, and tells them which colleague to ask for the values.",
+  "description": "Deploy any app to the team's Railway workspace and put it on a <name>.demo.nxtphase.ai domain, as an invokable skill. Explores the codebase, creates the Railway project and service, wires DNS through Cloudflare, deploys, and verifies. Ships no credentials: the skill reads RAILWAY_API_TOKEN and CLOUDFLARE_TOKEN from a .env file that the user creates, and points them at our shared password manager, where both values are kept, with a developer on the team as the fallback.",
   "author": {
     "name": "NxtPhase",
     "email": "marco@nxtphase.ai",
