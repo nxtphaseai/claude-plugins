@@ -36,6 +36,26 @@ Three places hold versions and they need to move together when a plugin changes:
 - `.claude-plugin/marketplace.json` → the matching `plugins[].version`
 - `.claude-plugin/marketplace.json` → `metadata.version` (so a marketplace re-subscribe sees *something* changed even if you only touched one plugin)
 
+This applies to plugins that live in this repo. Externally-sourced entries (see below) carry no `version` at all, so only `metadata.version` moves for those.
+
+## Externally-sourced entries
+
+An entry's `source` can point outside this repo, which is how `claude-security` is listed without vendoring a copy. Deliberate shape:
+
+```json
+"source": {
+  "source": "git-subdir",
+  "url": "https://github.com/anthropics/claude-plugins-official.git",
+  "path": "plugins/claude-security"
+}
+```
+
+- **No `ref`, no `sha`.** Resolution falls back to the upstream default branch, so every install picks up the current upstream state. Adding a `sha` pins the plugin to one commit, which defeats the point. Do not add one "for reproducibility" without deciding you want to stop tracking upstream.
+- **No `version` and no `license` keys.** Both belong to the upstream `plugin.json`; restating them here means restating them wrong the moment upstream moves. `metadata.version` is the only version we bump.
+- `git-subdir` is for a plugin inside a larger repo. Use `{"source": "github", "repo": "owner/repo"}` when the repo is the plugin itself. Other accepted source types are `url` (any git host), `npm`, `archive`, and `command`.
+- There is no way to reference another *marketplace*; every entry names where that one plugin lives.
+- These entries have no `plugins/<name>/` directory and no `install.sh`. The "two install paths" rule above does not apply to them: there is nothing local to install manually.
+
 ## Plugins overview
 
 - `agent-eval` — see section below; auto-grades each agent turn.
