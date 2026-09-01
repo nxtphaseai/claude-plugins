@@ -2,6 +2,9 @@
 
 Put any app on `<name>.demo.nxtphase.ai`, as a Claude Code skill.
 
+**Written by Kamiel.** He is the author of this skill. What this repo adds is the
+packaging: the marketplace entry, the installer, and taking the credentials out.
+
 Point Claude Code at an app, give it a short name, and it creates a Railway project in
 the shared **Nxtphase AI demos** workspace, creates the service, registers the custom
 domain, writes the CNAME and TXT records in Cloudflare, uploads the source, and verifies

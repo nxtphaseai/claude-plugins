@@ -7,10 +7,14 @@ description: >
   two API tokens from a .env file in the app directory; it ships with no
   credentials of its own.
 metadata:
+  author: Kamiel
   tags: deploy, railway, cloudflare, dns, demo, nxtphase
 ---
 
 # Deploy to Railway
+
+Written by Kamiel. The deploy flow and the API calls below are his; this is his
+skill packaged for the marketplace.
 
 Deploy any app to the **Nxtphase AI demos** workspace on Railway with a custom domain on `demo.nxtphase.ai`. Each demo gets its own Railway project.
 
