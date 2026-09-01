@@ -7,7 +7,7 @@
     "url": "https://nxtphase.ai"
   },
   "metadata": {
-    "version": "0.11.0",
+    "version": "0.12.0",
     "homepage": "https://github.com/nxtphaseai/claude-plugins"
   },
   "plugins": [
@@ -58,6 +58,22 @@
       "source": "./plugins/deploy-nxtphase-demo",
       "keywords": ["deploy", "railway", "cloudflare", "dns", "demo", "skill", "nxtphase"],
       "license": "MIT"
+    },
+    {
+      "name": "claude-security",
+      "description": "Anthropic's own security plugin, listed here so it installs from this marketplace like everything else. Deep vulnerability scanning of your own code, run inside your Claude Code session at a chosen effort tier, with every finding challenged before it is reported. Turns surviving findings into targeted patches, each verified by a panel of agents, that you apply when you choose. Not ours: the source is anthropics/claude-plugins-official, pinned to no version, so you always get what is on their main branch.",
+      "author": {
+        "name": "Anthropic",
+        "email": "support@anthropic.com"
+      },
+      "category": "security",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/anthropics/claude-plugins-official.git",
+        "path": "plugins/claude-security"
+      },
+      "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-security",
+      "keywords": ["security", "vulnerability", "scan", "audit", "appsec", "upstream"]
     }
   ]
 }

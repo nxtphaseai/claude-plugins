@@ -51,6 +51,26 @@ bash claude-plugins/plugins/agent-eval/install.sh
 
 More on the way.
 
+### Listed here, built elsewhere
+
+| Plugin | Upstream | What it does |
+| --- | --- | --- |
+| `claude-security` | [anthropics/claude-plugins-official](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-security) | Deep vulnerability scanning of your own code inside your Claude Code session, every finding challenged before it is reported, survivors turned into patches you apply when you choose. |
+
+We do not vendor a copy of these. The marketplace entry points straight at the
+upstream repository with no `ref` and no `sha`, so every install resolves to
+whatever is on their default branch at that moment. Anthropic ships an update,
+you get it on your next `claude /plugin marketplace update nxtphaseai`, and we
+change nothing here.
+
+```bash
+claude /plugin install claude-security@nxtphaseai
+```
+
+If you also have `claude-plugins-official` registered you will see the same
+plugin twice. They are the same thing; the marketplace suffix picks one.
+Upstream plugins keep their own license, which is not ours to state.
+
 ## Claude Desktop App?
 
 These plugins are **Claude Code only**. They will not load into the Claude
@@ -94,6 +114,34 @@ ships as an MCP server today.
 
 4. Open a PR against `main`. Once merged, teammates pick it up via
    `claude /plugin marketplace update nxtphaseai`.
+
+### Listing a plugin someone else maintains
+
+A `source` does not have to be a path inside this repo. To re-list a plugin that
+lives in another repository, point at it directly and leave `ref` and `sha` off,
+so it always resolves to that repo's default branch:
+
+```json
+{
+  "name": "claude-security",
+  "description": "...",
+  "author": { "name": "Anthropic" },
+  "source": {
+    "source": "git-subdir",
+    "url": "https://github.com/anthropics/claude-plugins-official.git",
+    "path": "plugins/claude-security"
+  },
+  "homepage": "https://github.com/anthropics/claude-plugins-official/tree/main/plugins/claude-security"
+}
+```
+
+Use `git-subdir` when the plugin sits in a subdirectory of a bigger repo, and
+`{"source": "github", "repo": "owner/repo"}` when the repo *is* the plugin.
+
+No `version` field: the version comes from the upstream `plugin.json` and we
+would only get it wrong. No `license` field either, for the same reason. Adding
+a `sha` would freeze the plugin at one commit, which is the opposite of what we
+want here.
 
 ## Versioning
 
